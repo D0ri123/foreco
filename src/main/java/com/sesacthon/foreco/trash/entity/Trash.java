@@ -3,6 +3,7 @@ package com.sesacthon.foreco.trash.entity;
 import static jakarta.persistence.FetchType.*;
 
 import com.sesacthon.foreco.category.entity.Category;
+
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

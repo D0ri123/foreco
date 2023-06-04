@@ -30,7 +30,6 @@ public class Region {
 
   private String dong;
 
-
   /**
    * 지역 기반 쓰레기 처리 정보.
    */

@@ -1,6 +1,5 @@
 package com.sesacthon.foreco.category.entity;
 
-
 import com.sesacthon.foreco.trash.entity.Trash;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
