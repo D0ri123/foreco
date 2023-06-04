@@ -34,8 +34,8 @@ jobs:
           mysql user: ${{secrets.DB_USERNAME}}
           mysql password: ${{secrets.DB_PASSWORD}}
 
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+    - name: Gradle Build Action
+      uses: gradle/gradle-build-action@v2.4.2
       with:
         arguments: build
         
