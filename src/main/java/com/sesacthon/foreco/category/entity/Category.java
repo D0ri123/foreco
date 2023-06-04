@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 쓰레기 품목(카테고리)
+ * 쓰레기 품목(카테고리).
  */
 @Entity
 @NoArgsConstructor
