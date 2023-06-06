@@ -20,7 +20,10 @@ public enum ErrorCode {
    * 도메인(entity)에 따른 에러코드 - 추가 예정
    */
   //세부 품목 쓰레기
-  DISPOSAL_TYPE_ENUM_NOT_SUPPORTED(HttpStatus.BAD_REQUEST, "D001", "해당 배출형태의 정보가 없습니다.");
+  DISPOSAL_TYPE_ENUM_NOT_SUPPORTED(HttpStatus.BAD_REQUEST, "D001", "해당 배출형태의 정보가 없습니다."),
+
+  //이미지 저장
+  IMAGE_WRONG_FILE_FORMAT(HttpStatus.BAD_REQUEST, "I001", "지원하지 않는 파일 확장자입니다.");
 
   private final HttpStatus status;
   private final String code;
