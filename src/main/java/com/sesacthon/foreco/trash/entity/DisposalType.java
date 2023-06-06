@@ -1,8 +1,7 @@
 package com.sesacthon.foreco.trash.entity;
 
-import static com.sesacthon.global.exception.ErrorCode.DISPOSAL_TYPE_ENUM_NOT_SUPPORTED;
-
 import com.sesacthon.foreco.trash.exception.TypeNotSupportedException;
+import com.sesacthon.global.exception.ErrorCode;
 import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public enum DisposalType {
     return Arrays.stream(DisposalType.values())
         .filter(v -> v.getCode().equals(code))
         .findAny()
-        .orElseThrow(() -> new TypeNotSupportedException(DISPOSAL_TYPE_ENUM_NOT_SUPPORTED));
+        .orElseThrow(() -> new TypeNotSupportedException(ErrorCode.DISPOSAL_TYPE_ENUM_NOT_SUPPORTED));
   }
 
 }
