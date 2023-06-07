@@ -1,8 +1,11 @@
 package com.sesacthon.global.response;
 
+import lombok.Getter;
+
 /**
  * 공통된 응답 형식을 제공하기 위한 응답 Dto.
  */
+@Getter
 public abstract class DefaultResponse {
 
   /**
