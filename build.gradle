@@ -44,7 +44,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // == 스프링 부트 3.0이상에서 mysql 의존 라이브러리 ==
-    implementation 'com.mysql:mysql-connector-j'
+    implementation 'mysql:mysql-connector-java:8.0.32'
 
     // == 스프링 부트 3.0 이상일 때, querydsl 의존성 ==
     implementation("com.querydsl:querydsl-jpa:${dependencyManagement.importedProperties["querydsl.version"]}:jakarta")
