@@ -23,8 +23,19 @@ public class Category {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * 카테고리 이름
+   */
   private String trashType;
 
+  /**
+   * 카테고리의 일반적인 처리방법
+   */
+  private String categoryMethod;
+
+  /**
+   * 카테고리에 속하는 상세 쓰레기
+   */
   @OneToMany(mappedBy = "category")
   private List<Trash> trashes = new ArrayList<>();
 

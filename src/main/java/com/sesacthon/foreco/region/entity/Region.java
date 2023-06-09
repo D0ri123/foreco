@@ -24,14 +24,23 @@ public class Region {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * 시
+   */
   private String city;
 
+  /**
+   * 구
+   */
   private String gu;
 
+  /**
+   * 동
+   */
   private String dong;
 
   /**
-   * 지역 기반 쓰레기 처리 정보.
+   * 지역 기반 쓰레기 처리 정보
    */
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "trash_id")
