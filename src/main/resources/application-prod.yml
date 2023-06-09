@@ -14,7 +14,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATABASE_URL}:3306/foreco_server_rds?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${DATABASE_URL}:3306/foreco_mysql?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
@@ -42,7 +42,6 @@ cloud:
       auto: false
     region:
       static: ap-northeast-2
-
 
 
 logging:
