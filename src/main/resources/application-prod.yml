@@ -1,5 +1,7 @@
 #application-prod.yml
 
+awsParameterStorePropertySource:
+  enabled: true
 
 aws:
   paramstore:
@@ -7,6 +9,7 @@ aws:
     prefix: /config
     name: mysql
     profile-separator: _
+
 
 spring:
   config:
