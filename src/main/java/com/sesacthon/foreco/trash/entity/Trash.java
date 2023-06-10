@@ -5,6 +5,7 @@ import static jakarta.persistence.FetchType.*;
 import com.sesacthon.foreco.category.entity.Category;
 
 import com.sesacthon.foreco.example.entity.Example;
+import com.sesacthon.foreco.region.entity.Region;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -64,5 +65,12 @@ public class Trash {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "category_id")
   private Category category;
+
+  /**
+   * 쓰레기 배출방법에 해당하는 지역
+   */
+  @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "region_id")
+  private Region region;
 
 }
