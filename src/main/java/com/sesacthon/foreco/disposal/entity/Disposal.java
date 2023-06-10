@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -46,7 +45,7 @@ public class Disposal {
   /**
    * 지역 정보
    */
-  @OneToOne(fetch = LAZY)
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "region_id")
   private Region region;
 
