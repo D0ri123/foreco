@@ -26,10 +26,10 @@ public class DisposalController {
    */
   @GetMapping("/api/v1/disposal")
   public ResponseEntity<DataResponse<List<DisposableCategoryDto>>> getDisposalInfoWithCond(
-      @RequestParam("region") String region) {
+      @RequestParam("region") String region, @RequestParam("day") String day) {
     Long regionId = regionService.findRegion(region);
-    List<DisposableCategoryDto> categories = disposalService.findCategoriesWithRegionAndDate(regionId);
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "해당 지역의 오늘 배출 정보 조회 성공", categories), HttpStatus.OK);
+    List<DisposableCategoryDto> categories = disposalService.findCategoriesWithRegionAndDate(regionId, day);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "해당 지역의 배출 정보 조회 성공", categories), HttpStatus.OK);
   }
 
 
