@@ -1,9 +1,14 @@
 package com.sesacthon.foreco.category.entity;
 
+import static jakarta.persistence.FetchType.LAZY;
+
+import com.sesacthon.foreco.region.entity.Region;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,5 +34,8 @@ public class Category {
    */
   private String categoryMethod;
 
+  @ManyToOne(fetch = LAZY)
+  @JoinColumn(name = "region_id")
+  private Region region;
 
 }
