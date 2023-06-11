@@ -16,8 +16,7 @@ public interface DisposalRepository extends JpaRepository<Disposal, Long> {
   List<Disposal> findDisposableList(@Param("regionId") Long regionId,
                                     @Param("today") String today);
 
-  @Query("select d from Disposal d join fetch d.region join fetch d.category "
-      + "where d.region.id = :regionId and d.category.id = :categoryId")
+  @Query("select d from Disposal d where d.region.id = :regionId and d.category.id = :categoryId")
   List<Disposal> findDisposalInfo(@Param("regionId") Long regionId,
                             @Param("categoryId") Long categoryId);
 }
