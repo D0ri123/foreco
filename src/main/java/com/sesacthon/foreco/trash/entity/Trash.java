@@ -56,6 +56,16 @@ public class Trash {
   @Convert(converter = DisposalTypeConverter.class)
   private DisposalType type;
 
+  /**
+   * 탭의 순서
+   */
+  private int orderOfTab;
+
+  /**
+   * 탭 최대 갯수
+   */
+  private int maxNumOfTab;
+
   @OneToMany(mappedBy = "trash")
   private List<Example> examples;
 
