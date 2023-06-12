@@ -1,14 +1,11 @@
 package com.sesacthon.foreco.region.entity;
 
-import static jakarta.persistence.FetchType.*;
-
-import com.sesacthon.foreco.trash.entity.Trash;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,23 +15,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
+@Table(indexes = {
+    @Index(name = "idx__city__gu__dong", columnList = "city, gu, dong")
+})
 public class Region {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * 시
+   */
   private String city;
 
+  /**
+   * 구
+   */
   private String gu;
 
-  private String dong;
-
   /**
-   * 지역 기반 쓰레기 처리 정보.
+   * 동
    */
-  @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "trash_id")
-  private Trash trash;
+  private String dong;
 
 }
