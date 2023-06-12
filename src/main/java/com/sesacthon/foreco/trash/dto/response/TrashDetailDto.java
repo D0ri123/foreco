@@ -4,6 +4,7 @@ import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
 import com.sesacthon.foreco.example.dto.response.ExampleInfoDto;
 import com.sesacthon.foreco.example.entity.Example;
+import com.sesacthon.foreco.trash.entity.DisposalType;
 import com.sesacthon.foreco.trash.entity.Trash;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +25,8 @@ public class TrashDetailDto {
    * 쓰레기 고유 Id
    */
   private final Long id;
+
+  private final DisposalType isRecyclable;
 
   /**
    * 쓰레기 이름
@@ -68,6 +71,7 @@ public class TrashDetailDto {
     this.maxNumOfTab = trash.getMaxNumOfTab();
     this.titleOfTab = trash.getTabTitle();
     this.id = trash.getId();
+    this.isRecyclable = trash.getType();
     this.trashName = trash.getTrashName();
     this.disposalMethod = trash.getMethod();
     this.remark = parsingRemark(trash.getRemark());

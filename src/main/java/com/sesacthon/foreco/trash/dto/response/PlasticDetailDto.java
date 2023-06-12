@@ -1,7 +1,10 @@
 package com.sesacthon.foreco.trash.dto.response;
 
+import static com.sesacthon.foreco.trash.entity.DisposalType.*;
+
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
+import com.sesacthon.foreco.trash.entity.DisposalType;
 import com.sesacthon.foreco.trash.entity.Trash;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +13,7 @@ import lombok.Getter;
 @Getter
 public class PlasticDetailDto {
 
+  private final DisposalType isRecyclable = RECYCLABLE;
   private final List<PlasticInfoDto> plasticInfo;
   private final DisposalInfoDto disposalInfo;
 
