@@ -43,7 +43,7 @@ public class TrashDetailDto {
   /**
    * 쓰레기 유의사항
    */
-  private final String remark;
+  private final List<String> remark;
 
   /**
    * 관련 쓰레기 예시
@@ -70,13 +70,17 @@ public class TrashDetailDto {
     this.id = trash.getId();
     this.trashName = trash.getTrashName();
     this.disposalMethod = trash.getMethod();
-    this.remark = trash.getRemark();
+    this.remark = parsingRemark(trash.getRemark());
 
     //조건을 만족하는 Disposal 데이터를 가져왔다.
     this.disposalInfo = new DisposalInfoDto(disposals);
     this.examples = examples.stream()
         .map(ExampleInfoDto::new)
         .collect(Collectors.toList());
+  }
+
+  private List<String> parsingRemark(String remark) {
+    return Arrays.stream(remark.split("&")).toList();
   }
 
 
