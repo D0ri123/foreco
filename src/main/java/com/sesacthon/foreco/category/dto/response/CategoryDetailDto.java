@@ -6,7 +6,6 @@ import com.sesacthon.foreco.disposal.entity.Disposal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Getter;
 
 @Getter
@@ -14,7 +13,7 @@ public class CategoryDetailDto {
 
   private final String categoryName;
   private final String disposalMethod;
-  private final List<DisposalInfoDto> disposalInfo;
+  private final DisposalInfoDto disposalInfo;
 
   //TODO: 고정시킬 데이터 정하기
   private final List<CategorySimpleDto> recommendCategories = new ArrayList<>(
@@ -29,9 +28,7 @@ public class CategoryDetailDto {
   public CategoryDetailDto(Category category, List<Disposal> disposalList) {
     this.categoryName = category.getTrashType();
     this.disposalMethod = category.getCategoryMethod();
-    this.disposalInfo = disposalList.stream()
-        .map(DisposalInfoDto::new)
-        .collect(Collectors.toList());
+    this.disposalInfo = new DisposalInfoDto(disposalList);
   }
 
 }

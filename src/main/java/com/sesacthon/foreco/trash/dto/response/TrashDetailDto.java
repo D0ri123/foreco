@@ -18,6 +18,7 @@ import lombok.Getter;
 public class TrashDetailDto {
   private final int orderOfTab;
   private final int maxNumOfTab;
+//  private final String titleOfTab;
 
   /**
    * 쓰레기 고유 Id
@@ -37,7 +38,11 @@ public class TrashDetailDto {
   /**
    * 쓰레기 배출 가능 시간 정보
    */
-  private final List<DisposalInfoDto> disposalInfo;
+  private final DisposalInfoDto disposalInfo;
+
+  /**
+   * 쓰레기 유의사항
+   */
   private final String remark;
 
   /**
@@ -66,10 +71,8 @@ public class TrashDetailDto {
     this.disposalMethod = trash.getMethod();
     this.remark = trash.getRemark();
 
-    this.disposalInfo = disposals.stream()
-        .map(DisposalInfoDto::new)
-        .collect(Collectors.toList());
-
+    //조건을 만족하는 Disposal 데이터를 가져왔다.
+    this.disposalInfo = new DisposalInfoDto(disposals);
     this.examples = examples.stream()
         .map(ExampleInfoDto::new)
         .collect(Collectors.toList());
