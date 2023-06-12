@@ -18,7 +18,7 @@ import lombok.Getter;
 public class TrashDetailDto {
   private final int orderOfTab;
   private final int maxNumOfTab;
-//  private final String titleOfTab;
+  private final String titleOfTab;
 
   /**
    * 쓰레기 고유 Id
@@ -66,6 +66,7 @@ public class TrashDetailDto {
   public TrashDetailDto(Trash trash, List<Disposal> disposals, List<Example> examples) {
     this.orderOfTab = trash.getOrderOfTab();
     this.maxNumOfTab = trash.getMaxNumOfTab();
+    this.titleOfTab = trash.getTabTitle();
     this.id = trash.getId();
     this.trashName = trash.getTrashName();
     this.disposalMethod = trash.getMethod();

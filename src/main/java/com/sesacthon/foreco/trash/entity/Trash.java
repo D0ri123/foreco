@@ -46,7 +46,7 @@ public class Trash {
   private String material;
 
   /**
-   * 쓰레기 배출 특이사항
+   * 쓰레기 배출 유의사항
    */
   private String remark;
 
@@ -65,6 +65,11 @@ public class Trash {
    * 탭 최대 갯수
    */
   private int maxNumOfTab;
+
+  /**
+   * 탭의 제목
+   */
+  private String tabTitle;
 
   @OneToMany(mappedBy = "trash")
   private List<Example> examples;

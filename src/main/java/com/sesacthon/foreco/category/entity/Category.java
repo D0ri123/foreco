@@ -34,6 +34,11 @@ public class Category {
    */
   private String categoryMethod;
 
+  /**
+   * 카테고리의 처리방법 유의사항
+   */
+  private String remark;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "region_id")
   private Region region;

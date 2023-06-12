@@ -13,6 +13,7 @@ public class CategoryDetailDto {
 
   private final String categoryName;
   private final String disposalMethod;
+  private final String remark;
   private final DisposalInfoDto disposalInfo;
 
   //TODO: 고정시킬 데이터 정하기
@@ -28,6 +29,7 @@ public class CategoryDetailDto {
   public CategoryDetailDto(Category category, List<Disposal> disposalList) {
     this.categoryName = category.getTrashType();
     this.disposalMethod = category.getCategoryMethod();
+    this.remark = category.getRemark();
     this.disposalInfo = new DisposalInfoDto(disposalList);
   }
 
