@@ -1,5 +1,6 @@
 package com.sesacthon.foreco.trash.controller;
 
+import com.sesacthon.foreco.trash.dto.response.PlasticDetailDto;
 import com.sesacthon.foreco.trash.dto.response.TrashDetailDto;
 import com.sesacthon.foreco.trash.service.TrashService;
 import com.sesacthon.global.response.DataResponse;
@@ -21,10 +22,14 @@ public class TrashController {
 
   @Operation(summary = "세부 품목 쓰레기 정보", description = "지역 기반 쓰레기 배출 정보를 조회할 수 있습니다.")
   @GetMapping("/api/v1/trash")
-  public ResponseEntity<DataResponse<TrashDetailDto>> getTrashInfoWithRegionCond(
+  public ResponseEntity<DataResponse<?>> getTrashInfoWithRegionCond(
       @RequestParam("region") String region,
       @RequestParam("name") String name,
       @RequestParam(value = "tab", required = false, defaultValue = "0") int tab) {
+    if(name.equals("페트병")) {
+      PlasticDetailDto plasticResponse = trashService.findPlasticInfoWithRegion(region);
+      return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "세부 품목 쓰레기 상세 조회 성공", plasticResponse), HttpStatus.OK);
+    }
     TrashDetailDto response = trashService.findTrashesWithRegionAndName(region, name, tab);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "세부 품목 쓰레기 상세 조회 성공", response), HttpStatus.OK);
   }
