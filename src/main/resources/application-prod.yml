@@ -10,7 +10,6 @@ aws:
     name: mysql
     profile-separator: _
 
-
 spring:
   config:
     activate:
@@ -18,9 +17,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DATABASE_URL}:3306/foreco_mysql?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:mysql://${DATABASE-URL}:3306/foreco_mysql?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DATABASE-USERNAME}
+    password: ${DATABASE-PASSWORD}
 
   jpa:
     hibernate:
@@ -36,12 +35,12 @@ cloud:
   aws:
     credentials:
       keys:
-        - access-key: ${S3_ACCESS}
-          secret-key: ${S3_SECRET}
-        - access-key: ${DYNAMO_ACCESS}
-          secret-key: ${DYNAMO_SECRET}
+        - access-key: ${S3-ACCESS}
+          secret-key: ${S3-SECRET}
+        - access-key: ${DYNAMO-ACCESS}
+          secret-key: ${DYNAMO-SECRET}
     s3:
-      bucket: ${S3_BUCKET}
+      bucket: ${S3-BUCKET}
     stack:
       auto: false
     region:
