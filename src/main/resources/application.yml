@@ -1,0 +1,8 @@
+# application.yml
+spring:
+  profiles:
+    active: prod
+
+springdoc:
+  swagger-ui:
+    path=/swagger-ui.html:
