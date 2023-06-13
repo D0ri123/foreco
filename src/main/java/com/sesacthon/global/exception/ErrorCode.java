@@ -31,8 +31,10 @@ public enum ErrorCode {
 
   //지역(Region)
   REGION_NOT_FOUND(HttpStatus.BAD_REQUEST, "R001", "등록되지 않은 지역입니다."),
-  NOT_VALID_REGION_TYPE(HttpStatus.BAD_REQUEST, "R002", "입력 값의 타입이 올바르지 않습니다. 예시)서울시 동대문구 전능1동");
+  NOT_VALID_REGION_TYPE(HttpStatus.BAD_REQUEST, "R002", "입력 값의 타입이 올바르지 않습니다. 예시)서울시 동대문구 전능1동"),
 
+  //동기부여(Motivation)
+  MOTIVATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "M001", "현재 쓰레기 관련 동기부여 정보가 없습니다.");
 
   private final HttpStatus status;
   private final String code;
