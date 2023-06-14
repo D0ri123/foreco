@@ -1,6 +1,5 @@
 #application-prod.yml
 
-
 awsParameterStorePropertySource:
   enabled: true
 
