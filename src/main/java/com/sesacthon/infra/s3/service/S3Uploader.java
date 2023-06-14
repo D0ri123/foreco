@@ -8,9 +8,13 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sesacthon.infra.s3.dto.S3Dto;
+import com.sesacthon.infra.s3.dto.UploadDto;
 import com.sesacthon.infra.s3.exception.ImageUploadException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -40,6 +44,17 @@ public class S3Uploader {
     return new S3Dto(amazonS3Client.getUrl(bucket, fileName).toString());
   }
 
+
+  /**
+   * 업로드한 이미지를 S3에 저장된 url로 반환한다.
+   * @param multipartFile
+   * @return
+   */
+  public String expectedFileUrl(MultipartFile multipartFile) {
+    String fileName = createFileName(multipartFile.getOriginalFilename());
+    uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
+    return amazonS3Client.getUrl(bucket, fileName).toString();
+  }
 
   /**
    * @param fileName multipartFile의 파일 이름
@@ -90,4 +105,36 @@ public class S3Uploader {
   }
 
 
+  /**
+   * s3에 업로드된 이미지의 url을 AI 모델에 보낸다.
+   * @param fileUrl
+   */
+  public UploadDto sendToAiServer(String fileUrl) throws IOException {
+    final String endPoint = "61.82.87.120:80/upload";
+    URL url = new URL(endPoint);
+    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+    //생성한 url connection이 서버에 데이터를 보낼 수 있는지 여부 설정
+    connection.setDoOutput(true);
+    //url 요청에 대한 메소드를 설정
+    connection.setRequestMethod("POST");
+    //일반 요청 속성을 지정
+    connection.setRequestProperty("Content-Type", "application/json");
+
+    String jsonPayload = "{\"image_url\": \"" + fileUrl + "\"}";
+
+    try (OutputStream outputStream = connection.getOutputStream()) {
+      outputStream.write(jsonPayload.getBytes());
+    }
+
+    // AI 서버로 요청 전송 및 응답 처리
+    int responseCode = connection.getResponseCode();
+    if (responseCode == HttpURLConnection.HTTP_OK) {
+      // 성공적으로 이미지 전달
+      return new UploadDto("AI 서버에 이미지 전송 성공");
+    } else {
+      // 전달 실패
+      return new UploadDto("AI 서버에 이미지 전송 실패");
+    }
+  }
 }
