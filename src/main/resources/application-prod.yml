@@ -20,6 +20,8 @@ spring:
     url: jdbc:mysql://${DATABASE_URL}:3306/foreco_mysql?&useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 30
 
   jpa:
     hibernate:
@@ -55,4 +57,6 @@ logging:
           descriptor:
             sql: trace
         SQL: debug
+server:
+  port: 8081
 
