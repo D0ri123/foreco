@@ -71,6 +71,11 @@ public class Trash {
    */
   private String tabTitle;
 
+  /**
+   * 아이콘 url
+   */
+  private String trashIcon;
+
   @OneToMany(mappedBy = "trash")
   private List<Example> examples;
 
