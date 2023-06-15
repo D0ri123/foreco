@@ -12,23 +12,27 @@ import lombok.Getter;
 public class CategoryDetailDto {
 
   private final String categoryName;
-  private final String disposalMethod;
+  private final String categoryIcon;
+  private final List<String> disposalMethod;
   private final List<String> remark;
   private final DisposalInfoDto disposalInfo;
 
-  //TODO: 고정시킬 데이터 정하기
   private final List<CategorySimpleDto> recommendCategories = new ArrayList<>(
       Arrays.asList(
-          new CategorySimpleDto(100L, "신문지"),
-          new CategorySimpleDto(101L, "우유팩"),
-          new CategorySimpleDto(102L, "전단지")
+          new CategorySimpleDto(8L, "종이 쇼핑백"),
+          new CategorySimpleDto(13L, "영수증"),
+          new CategorySimpleDto(10L, "사무용지"),
+          new CategorySimpleDto(7L, "공책"),
+          new CategorySimpleDto(6L, "신문"),
+          new CategorySimpleDto(15L, "폐휴지")
       )
   );
 
 
   public CategoryDetailDto(Category category, List<Disposal> disposalList) {
     this.categoryName = category.getTrashType();
-    this.disposalMethod = category.getCategoryMethod();
+    this.categoryIcon = category.getCategoryIcon();
+    this.disposalMethod = parsingRemark(category.getCategoryMethod());
     this.remark = parsingRemark(category.getRemark());
     this.disposalInfo = new DisposalInfoDto(disposalList);
   }

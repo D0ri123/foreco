@@ -39,6 +39,11 @@ public class Category {
    */
   private String remark;
 
+  /**
+   * 아이콘 url
+   */
+  private String categoryIcon;
+
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "region_id")
   private Region region;
