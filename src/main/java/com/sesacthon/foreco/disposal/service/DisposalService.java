@@ -23,7 +23,7 @@ public class DisposalService {
   public List<DisposableCategoryDto> findCategoriesWithRegionAndDate(Long regionId, String day) {
     List<Disposal> disposalList = disposalRepository.findDisposableList(regionId, day);
     return disposalList.stream()
-        .map(disposal -> new DisposableCategoryDto(disposal.getCategory().getId(), disposal.getCategory().getTrashType()))
+        .map(disposal -> new DisposableCategoryDto(disposal.getCategory().getId(), disposal.getCategory().getTrashType(), disposal.getCategory().getCategoryIcon()))
         .collect(Collectors.toList());
 
   }
