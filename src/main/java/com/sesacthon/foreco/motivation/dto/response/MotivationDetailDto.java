@@ -36,10 +36,10 @@ public class MotivationDetailDto {
 
   private Map<String, String> parsingProcess(String process) {
     Map<String, String> result = new LinkedHashMap<>();
-    //-은 과정 순서 구분자
-    List<String> processList = List.of(process.split("-"));
+    //-는 url에 자주 포함되기 때문에 구분자 변경
+    String[] splits = process.split(">");
     //#는 과정에서 제목,글 구분자
-    for (String s : processList) {
+    for (String s : splits) {
       String[] info = s.split("#");
       result.put(info[0], info[1]);
     }

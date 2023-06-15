@@ -56,12 +56,14 @@ public class TrashDetailDto {
   /**
    * 재질이 동일한 쓰레기 정보
    */
-  //TODO: 관련 쓰레기 어떤 품목으로 할지 미리 데이터 채워넣기
   private final List<TrashSimpleDto> recommendTrashes = new ArrayList<>(
       Arrays.asList(
-          new TrashSimpleDto(100L, "천막"),
-          new TrashSimpleDto(101L, "현수막"),
-          new TrashSimpleDto(102L, "과자봉지")
+          new TrashSimpleDto(41L, "천"),
+          new TrashSimpleDto(42L, "현수막"),
+          new TrashSimpleDto(43L, "에어캡(뽁뽁이)"),
+          new TrashSimpleDto(44L, "랩"),
+          new TrashSimpleDto(45L, "우비"),
+          new TrashSimpleDto(46L, "우산")
       )
   );
 

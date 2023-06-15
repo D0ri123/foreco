@@ -10,8 +10,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sesacthon.infra.s3.dto.S3Dto;
 import com.sesacthon.infra.s3.dto.UploadDto;
 import com.sesacthon.infra.s3.exception.ImageUploadException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -111,8 +113,8 @@ public class S3Uploader {
    */
   public UploadDto sendToAiServer(String fileUrl) throws IOException {
     final String endPoint = "http://61.82.87.120:80/upload";
-
     URL url = new URL(endPoint);
+
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
     //생성한 url connection이 서버에 데이터를 보낼 수 있는지 여부 설정
@@ -131,11 +133,20 @@ public class S3Uploader {
     // AI 서버로 요청 전송 및 응답 처리
     int responseCode = connection.getResponseCode();
     if (responseCode == HttpURLConnection.HTTP_OK) {
+      BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+      String inputLine;
+      StringBuilder result = new StringBuilder();
+      while((inputLine=in.readLine()) != null) {
+        result.append(inputLine);
+      }
+      in.close();
       // 성공적으로 이미지 전달
-      return new UploadDto("AI 서버에 이미지 전송 성공");
+      return new UploadDto("AI 서버에 이미지 전송 성공", result.toString());
     } else {
       // 전달 실패
       return new UploadDto("AI 서버에 이미지 전송 실패");
     }
   }
+
+
 }
