@@ -11,14 +11,16 @@ public class TrashSimpleDto {
 
   private final Long id;
   private final String name;
+  private String iconUrl;
 
   public TrashSimpleDto(Trash trash) {
     this.id = trash.getId();
     this.name = trash.getTrashName();
   }
 
-  public TrashSimpleDto(Long id, String name) {
+  public TrashSimpleDto(Long id, String name, String iconUrl) {
     this.id = id;
     this.name = name;
+    this.iconUrl = iconUrl;
   }
 }

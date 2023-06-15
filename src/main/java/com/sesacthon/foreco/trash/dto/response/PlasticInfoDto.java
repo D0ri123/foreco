@@ -9,6 +9,7 @@ import lombok.Getter;
 
 @Getter
 public class PlasticInfoDto {
+  private final Long categoryId;
   private final String name;
   private final List<String> disposalMethod;
   private final List<ExampleSimpleDto> examples;
@@ -17,6 +18,7 @@ public class PlasticInfoDto {
 
 
   public PlasticInfoDto(Trash trash) {
+    this.categoryId = trash.getCategory().getId();
     this.name = trash.getTrashName();
     this.disposalMethod = parsingRemark(trash.getMethod());
     this.examples = trash.getExamples().stream()
