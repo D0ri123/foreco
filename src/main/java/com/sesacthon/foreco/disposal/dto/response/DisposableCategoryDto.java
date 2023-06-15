@@ -17,10 +17,12 @@ public class DisposableCategoryDto {
    * 카테고리 이름
    */
   private final String categoryName;
+  private final String iconUrl;
 
-  public DisposableCategoryDto(Long categoryId, String categoryName) {
+  public DisposableCategoryDto(Long categoryId, String categoryName, String iconUrl) {
     this.categoryId = categoryId;
     this.categoryName = categoryName;
+    this.iconUrl = iconUrl;
   }
 
 }
