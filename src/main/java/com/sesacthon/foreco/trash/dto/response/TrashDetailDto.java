@@ -25,6 +25,7 @@ public class TrashDetailDto {
    * 쓰레기 고유 Id
    */
   private final Long id;
+  private final String trashIcon;
 
   private final DisposalType isRecyclable;
 
@@ -36,7 +37,7 @@ public class TrashDetailDto {
   /**
    * 쓰레기 배출방법
    */
-  private final String disposalMethod;
+  private final List<String> disposalMethod;
 
   /**
    * 쓰레기 배출 가능 시간 정보
@@ -73,9 +74,10 @@ public class TrashDetailDto {
     this.maxNumOfTab = trash.getMaxNumOfTab();
     this.titleOfTab = trash.getTabTitle();
     this.id = trash.getId();
+    this.trashIcon = trash.getTrashIcon();
     this.isRecyclable = trash.getType();
     this.trashName = trash.getTrashName();
-    this.disposalMethod = trash.getMethod();
+    this.disposalMethod = parsingRemark(trash.getMethod());
     this.remark = parsingRemark(trash.getRemark());
 
     //조건을 만족하는 Disposal 데이터를 가져왔다.

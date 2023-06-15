@@ -10,17 +10,20 @@ import lombok.Getter;
 @Getter
 public class PlasticInfoDto {
   private final String name;
-  private final String disposalMethod;
-  private final List<ExampleSimpleDto> emamples;
+  private final List<String> disposalMethod;
+  private final List<ExampleSimpleDto> examples;
   private final List<String> remark;
+  private final String trashIcon;
+
 
   public PlasticInfoDto(Trash trash) {
     this.name = trash.getTrashName();
-    this.disposalMethod = trash.getMethod();
-    this.emamples = trash.getExamples().stream()
+    this.disposalMethod = parsingRemark(trash.getMethod());
+    this.examples = trash.getExamples().stream()
         .map(ExampleSimpleDto::new)
         .collect(Collectors.toList());
     this.remark = parsingRemark(trash.getRemark());
+    this.trashIcon = trash.getTrashIcon();
   }
 
   private List<String> parsingRemark(String remark) {
