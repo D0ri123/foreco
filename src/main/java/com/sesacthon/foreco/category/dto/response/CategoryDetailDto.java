@@ -20,7 +20,6 @@ public class CategoryDetailDto {
   //TODO: 예시 이미지 추가하기
   private final List<CategorySimpleDto> recommendCategories = new ArrayList<>();
 
-
   public CategoryDetailDto(Category category, List<Disposal> disposalList) {
     this.categoryName = category.getTrashType();
     this.categoryIcon = category.getCategoryIcon();

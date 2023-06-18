@@ -20,6 +20,7 @@ public class PlasticDetailDto {
 
   //TODO: 예시 플라스틱 이미지 추가하기
   private final List<TrashSimpleDto> recommendTrashes = new ArrayList<>();
+
   public PlasticDetailDto(List<Trash> trashes, List<Disposal> disposals) {
     this.plasticInfo = trashes.stream()
         .map(PlasticInfoDto::new)
