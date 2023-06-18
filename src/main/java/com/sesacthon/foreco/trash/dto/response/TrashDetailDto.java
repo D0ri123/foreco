@@ -60,9 +60,9 @@ public class TrashDetailDto {
   /**
    * 재질이 동일한 쓰레기 정보
    */
+
   //TODO: 예시 이미지 추가하기
   private final List<TrashSimpleDto> recommendTrashes = new ArrayList<>();
-
 
   public TrashDetailDto(Trash trash, List<Disposal> disposals, List<Example> examples) {
     this.orderOfTab = trash.getOrderOfTab();

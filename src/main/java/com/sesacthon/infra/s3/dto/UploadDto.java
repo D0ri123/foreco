@@ -2,20 +2,23 @@ package com.sesacthon.infra.s3.dto;
 
 import lombok.Getter;
 
+/**
+ * AI 서버 전달 결과 response dto
+ */
+
 @Getter
 public class UploadDto {
 
   private final String message;
-  private final String result;
+  private String result;
 
   public UploadDto(String message, String result) {
     this.message = message;
     this.result = result;
   }
 
-  public UploadDto(String failedMessage) {
-    this.message = failedMessage;
-    this.result = null;
+  public UploadDto(String message) {
+    this.message = message;
   }
 
 }
