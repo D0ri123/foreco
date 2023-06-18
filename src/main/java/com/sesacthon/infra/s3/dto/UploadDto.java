@@ -2,6 +2,10 @@ package com.sesacthon.infra.s3.dto;
 
 import lombok.Getter;
 
+/**
+ * AI 서버 전달 결과 response dto
+ */
+
 @Getter
 public class UploadDto {
 

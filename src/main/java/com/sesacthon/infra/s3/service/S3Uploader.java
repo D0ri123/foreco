@@ -7,7 +7,6 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.sesacthon.infra.s3.dto.S3Dto;
 import com.sesacthon.infra.s3.dto.UploadDto;
 import com.sesacthon.infra.s3.exception.ImageUploadException;
 import java.io.BufferedReader;
@@ -40,23 +39,12 @@ public class S3Uploader {
    * @param multipartFile S3에 올릴 multipartFile
    * @return S3에 저장된 이미지의 url 반환
    */
-  public S3Dto uploadFile(MultipartFile multipartFile) {
-    String fileName = createFileName(multipartFile.getOriginalFilename());
-    uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
-    return new S3Dto(amazonS3Client.getUrl(bucket, fileName).toString());
-  }
-
-
-  /**
-   * 업로드한 이미지를 S3에 저장된 url로 반환한다.
-   * @param multipartFile
-   * @return
-   */
   public String expectedFileUrl(MultipartFile multipartFile) {
     String fileName = createFileName(multipartFile.getOriginalFilename());
     uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
     return amazonS3Client.getUrl(bucket, fileName).toString();
   }
+
 
   /**
    * @param fileName multipartFile의 파일 이름
@@ -105,8 +93,7 @@ public class S3Uploader {
     objectMetadata.setContentType(file.getContentType());
     return objectMetadata;
   }
-
-
+  
   /**
    * s3에 업로드된 이미지의 url을 AI 모델에 보낸다.
    * @param fileUrl
@@ -148,6 +135,5 @@ public class S3Uploader {
       return new UploadDto("AI 서버에 이미지 전송 실패");
     }
   }
-
 
 }

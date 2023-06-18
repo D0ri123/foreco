@@ -25,14 +25,9 @@ public class S3Controller {
   @Operation(summary = "AI서버 이미지 업로드", description = "촬영 사진을 S3에 업로드하여 이미지 url을 AI 서버로 보낸 후 처리값을 확인할 수 있습니다.")
   @PostMapping(value = "/api/v1/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<DataResponse<UploadDto>> sendTrashImg (
-      @RequestPart("img") MultipartFile multipartFile) throws IOException {
-    //1. 올라간 S3의 이미지 url을 반환한다.
+      @RequestPart("img") MultipartFile multipartFile) throws IOException, IOException {
     String fileUrl = s3Uploader.expectedFileUrl(multipartFile);
-
-    //2. 반환된 S3의 이미지 url을 AI모델 엔드포인트로 보낸다.
     UploadDto uploadDto = s3Uploader.sendToAiServer(fileUrl);
-
-    //3. AI모델로 이미지 전송 성공
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.CREATED, "촬영 이미지 업로드 성공", uploadDto), HttpStatus.CREATED);
   }
