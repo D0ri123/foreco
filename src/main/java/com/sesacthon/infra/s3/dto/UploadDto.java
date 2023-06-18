@@ -1,7 +1,6 @@
 package com.sesacthon.infra.s3.dto;
 
 import lombok.Getter;
-
 @Getter
 public class UploadDto {
 
