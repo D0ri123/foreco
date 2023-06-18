@@ -60,15 +60,8 @@ public class TrashDetailDto {
   /**
    * 재질이 동일한 쓰레기 정보
    */
-  private final List<TrashSimpleDto> recommendTrashes = new ArrayList<>(
-      Arrays.asList(
-          new TrashSimpleDto(9L, "천", "https://trash-s3-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8E%E1%85%A5%E1%86%AB.png"),
-          new TrashSimpleDto(10L, "현수막", "https://trash-s3-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%92%E1%85%A7%E1%86%AB%E1%84%89%E1%85%AE%E1%84%86%E1%85%A1%E1%86%A8.png"),
-          new TrashSimpleDto(11L, "랩", "https://trash-s3-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A2%E1%86%B8.png"),
-          new TrashSimpleDto(12L, "우비", "https://trash-s3-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%AE%E1%84%87%E1%85%B5.png"),
-          new TrashSimpleDto(13L, "우산", "https://trash-s3-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%AE%E1%84%89%E1%85%A1%E1%86%AB.png")
-      )
-  );
+  //TODO: 예시 이미지 추가하기
+  private final List<TrashSimpleDto> recommendTrashes = new ArrayList<>();
 
 
   public TrashDetailDto(Trash trash, List<Disposal> disposals, List<Example> examples) {

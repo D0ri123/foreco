@@ -112,7 +112,8 @@ public class S3Uploader {
    * @param fileUrl
    */
   public UploadDto sendToAiServer(String fileUrl) throws IOException {
-    final String endPoint = "http://61.82.87.120:80/upload";
+    //TODO: 엔드 포인트 paramStore에 저장하기
+    final String endPoint = "ai model endpoint";
     URL url = new URL(endPoint);
 
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
