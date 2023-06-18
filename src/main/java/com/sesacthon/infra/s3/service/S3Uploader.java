@@ -7,15 +7,22 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+<<<<<<< HEAD
 import com.sesacthon.infra.s3.dto.UploadDto;
+=======
+import com.sesacthon.infra.s3.dto.S3Dto;
+>>>>>>> parent of f7bfa8a (feat: AI 서버에 이미지 업로드하는 기능 구현)
 import com.sesacthon.infra.s3.exception.ImageUploadException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+=======
+>>>>>>> parent of f7bfa8a (feat: AI 서버에 이미지 업로드하는 기능 구현)
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -39,10 +46,17 @@ public class S3Uploader {
    * @param multipartFile S3에 올릴 multipartFile
    * @return S3에 저장된 이미지의 url 반환
    */
+<<<<<<< HEAD
   public String expectedFileUrl(MultipartFile multipartFile) {
     String fileName = createFileName(multipartFile.getOriginalFilename());
     uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
     return amazonS3Client.getUrl(bucket, fileName).toString();
+=======
+  public S3Dto uploadFile(MultipartFile multipartFile) {
+    String fileName = createFileName(multipartFile.getOriginalFilename());
+    uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
+    return new S3Dto(amazonS3Client.getUrl(bucket, fileName).toString());
+>>>>>>> parent of f7bfa8a (feat: AI 서버에 이미지 업로드하는 기능 구현)
   }
 
 
@@ -95,6 +109,7 @@ public class S3Uploader {
   }
 
 
+<<<<<<< HEAD
   /**
    * s3에 업로드된 이미지의 url을 AI 모델에 보낸다.
    * @param fileUrl
@@ -136,4 +151,6 @@ public class S3Uploader {
       return new UploadDto("AI 서버에 이미지 전송 실패");
     }
   }
+=======
+>>>>>>> parent of f7bfa8a (feat: AI 서버에 이미지 업로드하는 기능 구현)
 }
