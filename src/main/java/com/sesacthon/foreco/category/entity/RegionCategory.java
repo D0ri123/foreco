@@ -1,5 +1,7 @@
 package com.sesacthon.foreco.category.entity;
 
+import static jakarta.persistence.FetchType.*;
+
 import com.sesacthon.foreco.region.entity.Region;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,11 +21,11 @@ public class RegionCategory {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "category_id")
   private Trash trash;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "region_id")
   private Region region;
 

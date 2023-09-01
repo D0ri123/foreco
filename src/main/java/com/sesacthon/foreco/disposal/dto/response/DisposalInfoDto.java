@@ -30,9 +30,9 @@ public class DisposalInfoDto {
   public DisposalInfoDto(List<Disposal> disposals) {
     this.days = new ArrayList<>();
     for(Disposal disposal : disposals){
-      days.add(disposal.getDay());
+      days.add(disposal.getDisposableDay());
     }
-    this.time = disposals.get(0).getTime();
+    this.time = disposals.get(0).getDisposableTime();
 
   }
 

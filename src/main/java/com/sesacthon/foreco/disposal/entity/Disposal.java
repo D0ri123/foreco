@@ -25,12 +25,12 @@ public class Disposal {
   /**
    * 쓰레기 배출 가능 시간
    */
-  private String time;
+  private String disposableTime;
 
   /**
    * 쓰레기 배출 가능 요일
    */
-  private String day;
+  private String disposableDay;
 
   @ManyToOne
   @JoinColumn(name = "region_category_id")

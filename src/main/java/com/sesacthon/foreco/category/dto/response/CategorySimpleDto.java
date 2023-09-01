@@ -11,7 +11,7 @@ public class CategorySimpleDto {
 
   public CategorySimpleDto(Trash trash) {
     this.categoryId = trash.getId();
-    this.categoryName = trash.getParentTrash().getName();
+    this.categoryName = trash.getParentTrash().getTrashName();
   }
 
   public CategorySimpleDto(Long id, String name) {

@@ -35,13 +35,13 @@ public class TrashInfo {
    * 쓰레기 처리형태
    */
   @Convert(converter = DisposalTypeConverter.class)
-  private DisposalType type;
+  private DisposalType disposalType;
 
   /**
    * 쓰레기 카테고리
    */
   @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "trash_id")
+  @JoinColumn(name = "category_id")
   private Trash trash;
 
 

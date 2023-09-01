@@ -30,7 +30,7 @@ public class Trash {
   /**
    * 쓰레기 이름
    */
-  private String name;
+  private String trashName;
 
   /**
    * 쓰레기 보기 형식
@@ -49,10 +49,10 @@ public class Trash {
    * 해당 데이터가 상위 카테고리라면 null
    */
   @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "parent_trash_id")
+  @JoinColumn(name = "parent_trash_id", referencedColumnName = "trashName")
   private Trash parentTrash;
 
   @OneToMany(mappedBy = "parentTrash")
-  private List<Trash> childTrashes;
+  private List<Trash> childCategories;
 
 }
