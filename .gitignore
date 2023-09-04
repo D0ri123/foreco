@@ -39,3 +39,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+## git
+**/workflows/develop-pr-merged.yml

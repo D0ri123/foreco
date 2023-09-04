@@ -53,7 +53,7 @@ public class Trash {
   private Trash parentTrash;
 
   @OneToMany(mappedBy = "parentTrash")
-  private List<Trash> childCategories;
+  private List<Trash> childTrashes;
 
   /**
    * 지역 카테고리(RegionCategory)
