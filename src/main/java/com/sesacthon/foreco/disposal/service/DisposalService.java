@@ -4,7 +4,6 @@ import com.sesacthon.foreco.category.entity.RegionCategory;
 import com.sesacthon.foreco.category.repository.RegionCategoryRepository;
 import com.sesacthon.foreco.disposal.dto.response.TodayDisposableCategoriesDto;
 import com.sesacthon.foreco.disposal.repository.DisposalRepository;
-import com.sesacthon.foreco.region.repository.RegionRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DisposalService {
-  private final RegionRepository regionRepository;
   private final DisposalRepository disposalRepository;
   private final RegionCategoryRepository regionCategoryRepository;
 
@@ -23,10 +21,10 @@ public class DisposalService {
   private static final Long REGION_ID = 1L;
 
   public TodayDisposableCategoriesDto getDisposalInfo(String day) {
-    //2. regionId로 묶여있는 지역카테고리 Id들을 가져온다.
+    //1. regionId로 묶여있는 지역카테고리 Id들을 가져온다.
     List<RegionCategory> regionCategories = regionCategoryRepository.findByRegionId(REGION_ID);
 
-    //3. 카테고리 리스트들 중에서 day와 일치하는 품목을 리스트에 넣는다.
+    //2. 카테고리 리스트들 중에서 day와 일치하는 품목을 리스트에 넣는다.
     List<String> resultInfo = regionCategories.stream()
         .filter(regionCategory -> day.equals(
             //TODO: 쿼리 최적화 필요
