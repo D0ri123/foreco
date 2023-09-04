@@ -1,4 +1,4 @@
-package com.sesacthon.foreco.mock.dto;
+package com.sesacthon.foreco.disposal.dto.response;
 
 import java.util.List;
 import lombok.Getter;

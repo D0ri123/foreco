@@ -3,8 +3,6 @@ package com.sesacthon.foreco.category.entity;
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.LAZY;
 
-import com.sesacthon.foreco.trash.entity.TrashInfo;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -58,14 +56,8 @@ public class Trash {
   private List<Trash> childCategories;
 
   /**
-   * 배출정보(trashInfo)
-   */
-  @OneToMany(mappedBy = "trash")
-  List<TrashInfo> TrashInfos = new ArrayList<TrashInfo>();
-
-  /**
    * 지역 카테고리(RegionCategory)
    */
   @OneToMany(mappedBy = "trash")
-  List<RegionCategory> regionCategories= new ArrayList<RegionCategory>();
+  List<RegionCategory> regionCategories= new ArrayList<>();
 }

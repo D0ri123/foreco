@@ -2,11 +2,11 @@ package com.sesacthon.foreco.mock;
 
 
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
+import com.sesacthon.foreco.disposal.dto.response.TodayDisposableCategoriesDto;
 import com.sesacthon.foreco.mock.dto.RelevantTrashDto;
 import com.sesacthon.foreco.mock.dto.RelevantTrashesDto;
 import com.sesacthon.foreco.mock.dto.SearchedTrashDto;
 import com.sesacthon.foreco.mock.dto.SearchedTrashesDto;
-import com.sesacthon.foreco.mock.dto.TodayDisposableCategoriesDto;
 import com.sesacthon.foreco.mock.dto.TrashDetailDto;
 import com.sesacthon.global.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;

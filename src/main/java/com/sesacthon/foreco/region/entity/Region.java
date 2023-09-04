@@ -1,7 +1,7 @@
 package com.sesacthon.foreco.region.entity;
 
+import com.sesacthon.foreco.category.entity.RegionCategory;
 import com.sesacthon.foreco.member.entity.Member;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -48,5 +48,8 @@ public class Region {
    * 회원(member)
    */
   @OneToMany(mappedBy = "region")
-  private List<Member> members = new ArrayList<Member>();
+  private List<Member> members = new ArrayList<>();
+
+  @OneToMany(mappedBy = "region")
+  private List<RegionCategory> categories = new ArrayList<>();
 }
