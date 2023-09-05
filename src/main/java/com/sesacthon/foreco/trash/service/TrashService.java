@@ -6,8 +6,9 @@ import com.sesacthon.foreco.category.repository.RegionCategoryRepository;
 import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
-import com.sesacthon.foreco.disposal.repository.DisposalRepository;
 import com.sesacthon.foreco.trash.dto.RelevantTrashesDto;
+import com.sesacthon.foreco.trash.dto.SearchedTrashDto;
+import com.sesacthon.foreco.trash.dto.SearchedTrashesDto;
 import com.sesacthon.foreco.trash.dto.TrashDetailDto;
 import com.sesacthon.foreco.trash.entity.TrashInfo;
 import com.sesacthon.foreco.trash.exception.RelatedTrashNotFoundException;
@@ -18,6 +19,7 @@ import com.sesacthon.global.exception.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,6 @@ import org.springframework.stereotype.Service;
 public class TrashService {
 
   private final TrashInfoRepository trashInfoRepository;
-  private final DisposalRepository disposalRepository;
   private final TrashRepository trashRepository;
   private final RegionCategoryRepository regionCategoryRepository;
 
@@ -90,4 +91,22 @@ public class TrashService {
     return disposals;
   }
 
+  //위치 기반으로 쓰레기 키워드 검색 결과를 가져와야 한다.
+  public SearchedTrashesDto searchTrashWithKeyword(Long regionId, String keyword) {
+    //1. regionId를 가지고, categoryList들을 가져온다.
+    List<Long> categoryIds = regionCategoryRepository.findCategoryIdsByRegionId(regionId);
+    List<Trash> allTrashes= new ArrayList<>();
+
+    //2. categoryId 중, 해당 Id를 외래키로 가지는 쓰레기 목록중에서 keyword를 포함하는 결과를 가져온다.
+    for(Long category : categoryIds) {
+      List<Trash> trashes = trashRepository.searchTrashWithKeyword(category, keyword);
+      allTrashes.addAll(trashes);
+    }
+
+    List<SearchedTrashDto> result = allTrashes.stream()
+        .map(trash -> new SearchedTrashDto(trash.getId(), trash.getName(), trash.getTrashIcon()))
+        .collect(Collectors.toList());
+
+    return new SearchedTrashesDto(result);
+  }
 }

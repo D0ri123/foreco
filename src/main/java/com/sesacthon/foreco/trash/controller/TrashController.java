@@ -1,6 +1,7 @@
 package com.sesacthon.foreco.trash.controller;
 
 import com.sesacthon.foreco.trash.dto.RelevantTrashesDto;
+import com.sesacthon.foreco.trash.dto.SearchedTrashesDto;
 import com.sesacthon.foreco.trash.dto.TrashDetailDto;
 import com.sesacthon.foreco.trash.service.TrashService;
 import com.sesacthon.global.response.DataResponse;
@@ -34,12 +35,20 @@ public class TrashController {
   }
 
   @Operation(summary = "쓰레기 상세 조회시 필요한, 관련된 쓰레기 정보 조회API", description = "쓰레기 상세조회 화면에서 제공되야할 관련된 쓰레기들 입니다.")
-  @GetMapping("api/v1/trash/relation")
+  @GetMapping("/api/v1/trash/relation")
   public ResponseEntity<DataResponse<RelevantTrashesDto>> getRelevantTrashes(
       @Parameter(description = "조회할 쓰레기 id(숫자)") @RequestParam("id") Long id
   ) {
     RelevantTrashesDto response = trashService.getRelevantTrashes(id, REGION_ID);
     return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "관련(추천) 쓰레기 정보 조회 성공", response),
         HttpStatus.OK);
+  }
+
+  @Operation(summary = "쓰레기 검색결과 조회 API", description = "메인 화면에서 검색을 통해 상세조회가 가능한 쓰레기의 정보를 조회합니다.")
+  @GetMapping("/api/v1/trash")
+  public ResponseEntity<DataResponse<SearchedTrashesDto>> getTrashesBySearch(
+      @Parameter(description = "검색할 키워드를 입력해주세요") @RequestParam("keyword") String keyword) {
+    SearchedTrashesDto searchedTrashes = trashService.searchTrashWithKeyword(REGION_ID, keyword);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "검색 결과 조회", searchedTrashes), HttpStatus.OK);
   }
 }

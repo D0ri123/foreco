@@ -14,4 +14,7 @@ public interface RegionCategoryRepository extends JpaRepository<RegionCategory, 
   @Query("select rc from RegionCategory rc join fetch rc.trash where rc.region.id = :regionId")
   List<RegionCategory> findRegionCategories(@Param("regionId") Long regionId);
 
+  @Query("select rc.trash.id from RegionCategory rc where rc.region.id = :regionId")
+  List<Long> findCategoryIdsByRegionId(@Param("regionId") Long regionId);
+
 }
