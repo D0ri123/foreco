@@ -24,6 +24,7 @@ services:
       S3_SECRET: ${S3_SECRET}
       SECRET_KEY: ${SECRET_KEY}
       EC2_HOST: ${EC2_HOST}
+      AI_URL: ${AI_URL}
     depends_on:
       - redis
     links:
@@ -44,6 +45,7 @@ services:
       S3_SECRET: ${S3_SECRET}
       SECRET_KEY: ${SECRET_KEY}
       EC2_HOST: ${EC2_HOST}
+      AI_URL: ${AI_URL}
     depends_on:
       - redis
     links:
