@@ -35,6 +35,9 @@ public class S3Uploader {
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
 
+  @Value("${ai.modelUrl}")
+  private String aiUrl;
+
   /**
    * @param multipartFile 사용자가 촬영한 사진
    * @return S3에 올린 이후 url을 반환
@@ -100,8 +103,7 @@ public class S3Uploader {
    * @return 서버 전송 결과 메시지 + 분석 결과값 반환
    */
   public UploadDto sendToAiServer(MultipartFile multipartFile) throws IOException{
-    //TODO: ai server endpoint 값이 노출되지 않도록 처리
-    final String endPoint = "{ai server endpoint}";
+    final String endPoint = aiUrl;
 
     String fileUrl = uploadFile(multipartFile);
 
@@ -115,7 +117,6 @@ public class S3Uploader {
     //일반 요청 속성을 지정
     connection.setRequestProperty("Content-Type", "application/json");
 
-    //TODO: json 결과 형식 확인 필요함
     String jsonPayload = "{\"image_url\": \"" + fileUrl + "\"}";
 
     try (OutputStream outputStream = connection.getOutputStream()) {
@@ -135,11 +136,18 @@ public class S3Uploader {
       }
       in.close();
 
-      return new UploadDto("AI 서버에 이미지 전송 성공", response.toString());
+      return new UploadDto("AI 서버에 이미지 전송 성공", removeEscape(response.toString()));
     } else {
       // 전달 실패
       return new UploadDto("AI 서버에 이미지 전송 실패", null);
     }
+  }
+
+  private String removeEscape(String response) {
+    return response.replace("\"", "")
+                   .replace("bboxes:", "")
+        .replace("{", "")
+        .replace("}", "");
   }
 }
 
