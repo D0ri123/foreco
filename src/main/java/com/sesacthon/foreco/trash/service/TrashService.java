@@ -3,11 +3,13 @@ package com.sesacthon.foreco.trash.service;
 import com.sesacthon.foreco.category.entity.RegionCategory;
 import com.sesacthon.foreco.category.entity.Trash;
 import com.sesacthon.foreco.category.repository.RegionCategoryRepository;
+import com.sesacthon.foreco.category.repository.TrashQueryRepository;
 import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
-import com.sesacthon.foreco.disposal.repository.DisposalRepository;
 import com.sesacthon.foreco.trash.dto.RelevantTrashesDto;
+import com.sesacthon.foreco.trash.dto.SearchedTrashDto;
+import com.sesacthon.foreco.trash.dto.SearchedTrashesDto;
 import com.sesacthon.foreco.trash.dto.TrashDetailDto;
 import com.sesacthon.foreco.trash.entity.TrashInfo;
 import com.sesacthon.foreco.trash.exception.RelatedTrashNotFoundException;
@@ -18,6 +20,7 @@ import com.sesacthon.global.exception.ErrorCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,9 +31,9 @@ import org.springframework.stereotype.Service;
 public class TrashService {
 
   private final TrashInfoRepository trashInfoRepository;
-  private final DisposalRepository disposalRepository;
   private final TrashRepository trashRepository;
   private final RegionCategoryRepository regionCategoryRepository;
+  private final TrashQueryRepository trashQueryRepository;
 
 
   public RelevantTrashesDto getRelevantTrashes(Long id, Long regionId) {
@@ -90,4 +93,15 @@ public class TrashService {
     return disposals;
   }
 
+  public SearchedTrashesDto searchTrashWithKeyword(Long regionId, String keyword) {
+    List<Long> categoryIds = regionCategoryRepository.findCategoryIds(regionId);
+    List<Trash> trashesWithSearchCond = new ArrayList<>();
+    for(Long id : categoryIds) {
+      trashesWithSearchCond = trashQueryRepository.findTrashesWithSearchCond(keyword, id);
+    }
+    List<SearchedTrashDto> trashResult = trashesWithSearchCond.stream()
+        .map(trash -> new SearchedTrashDto(trash.getId(), trash.getName(), "아이콘 url"))
+        .collect(Collectors.toList());
+    return new SearchedTrashesDto(trashResult);
+  }
 }
