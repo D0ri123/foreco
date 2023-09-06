@@ -6,6 +6,7 @@ import com.sesacthon.foreco.category.repository.RegionCategoryRepository;
 import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
+import com.sesacthon.foreco.trash.dto.RelevantTrashDto;
 import com.sesacthon.foreco.trash.dto.RelevantTrashesDto;
 import com.sesacthon.foreco.trash.dto.SearchedTrashDto;
 import com.sesacthon.foreco.trash.dto.SearchedTrashesDto;
@@ -16,9 +17,9 @@ import com.sesacthon.foreco.trash.exception.DisposalNotFoundException;
 import com.sesacthon.foreco.trash.exception.TrashNotFoundException;
 import com.sesacthon.foreco.trash.repository.TrashInfoRepository;
 import com.sesacthon.global.exception.ErrorCode;
+import com.sesacthon.infra.s3.service.S3Downloader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class TrashService {
   private final TrashInfoRepository trashInfoRepository;
   private final TrashRepository trashRepository;
   private final RegionCategoryRepository regionCategoryRepository;
+  private final S3Downloader s3Downloader;
 
 
   public RelevantTrashesDto getRelevantTrashes(Long id, Long regionId) {
@@ -50,14 +52,21 @@ public class TrashService {
       throw new RelatedTrashNotFoundException(ErrorCode.RELATED_TRASH_NOT_FOUND);
     }
 
-    List<TrashInfo> trashInfos = new ArrayList<>();
-    for (Trash childTrash : childTrashes) {
-      Optional<TrashInfo> trashInfo = trashInfoRepository.findByTrashIdAndRegionId(
-          childTrash.getId(), regionId);
-      trashInfo.ifPresent(trashInfos::add);
-    }
+//    List<TrashInfo> trashInfos = new ArrayList<>();
+//    for (Trash childTrash : childTrashes) {
+//      Optional<TrashInfo> trashInfo = trashInfoRepository.findByTrashIdAndRegionId(
+//          childTrash.getId(), regionId);
+//      trashInfo.ifPresent(trashInfos::add);
+//    }
 
-    return new RelevantTrashesDto(trashInfos);
+    List<RelevantTrashDto> trashes = childTrashes.stream()
+        .map((trash) -> {
+          String iconUrl = s3Downloader.getIconUrl(trash.getTrashIcon().getIconFile());
+          return new RelevantTrashDto(trash.getId(), trash.getName(), iconUrl);
+        })
+        .collect(Collectors.toList());
+
+    return new RelevantTrashesDto(trashes);
   }
 
   public TrashDetailDto getTrashDetail(Long id, Long regionId) {
@@ -77,7 +86,8 @@ public class TrashService {
         .detailType(trash.getViewType()).name(trash.getName()).disposalMethod(trashInfo.getMethod())
         .disposalInfoDto(new DisposalInfoDto(disposals))
         .remark(trashInfo.getRemarks().stream().map(remark -> remark.getDescription()).toList())
-        .iconUrl(trash.getTrashIcon()).build();
+        .iconUrl(s3Downloader.getIconUrl(trash.getTrashIcon().getIconFile()))
+        .build();
 
     return trashDetailDto;
 
@@ -104,7 +114,10 @@ public class TrashService {
     }
 
     List<SearchedTrashDto> result = allTrashes.stream()
-        .map(trash -> new SearchedTrashDto(trash.getId(), trash.getName(), trash.getTrashIcon()))
+        .map((trash) -> {
+          String iconUrl = s3Downloader.getIconUrl(trash.getTrashIcon().getIconFile());
+          return new SearchedTrashDto(trash.getId(), trash.getName(), iconUrl);
+        })
         .collect(Collectors.toList());
 
     return new SearchedTrashesDto(result);

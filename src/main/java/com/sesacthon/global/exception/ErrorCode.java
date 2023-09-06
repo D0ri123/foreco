@@ -35,8 +35,10 @@ public enum ErrorCode {
   TRASH_NOT_FOUND(HttpStatus.BAD_REQUEST, "T002", "현재 지역의 해당 쓰레기 배출 정보가 없습니다."),
 
   //관련 쓰레기
-  RELATED_TRASH_NOT_FOUND(HttpStatus.BAD_REQUEST, "T003", "현재 지역의 관련 쓰레기 배출 정보가 없습니다."),
+  RELATED_TRASH_NOT_FOUND(HttpStatus.BAD_REQUEST, "T003", "해당 쓰레기의 관련 쓰레기 정보가 없습니다."),
 
+  //AI
+  AI_SERVER_CONNECTION_FAILED(HttpStatus.SERVICE_UNAVAILABLE, "A001", "Ai 서버에 연결할 수 없습니다."),
 
   //이미지 저장
   IMAGE_WRONG_FILE_FORMAT(HttpStatus.BAD_REQUEST, "I001", "지원하지 않는 파일 확장자입니다."),
@@ -49,7 +51,6 @@ public enum ErrorCode {
   MOTIVATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "M001", "현재 쓰레기 관련 동기부여 정보가 없습니다."),
 
   //배출정보(Disposal)
-
   DISPOSAL_NOT_FOUND(HttpStatus.BAD_REQUEST,"D001", "현재 조회 가능한 배출 정보가 없습니다.");
 
 

@@ -42,7 +42,8 @@ public class Trash {
   /**
    * 쓰레기 아이콘 이름
    */
-  private String trashIcon;
+  @Enumerated(STRING)
+  private Icon trashIcon;
 
   /**
    * 상위 카테고리 Id.
