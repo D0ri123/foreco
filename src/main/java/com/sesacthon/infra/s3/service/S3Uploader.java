@@ -7,6 +7,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.sesacthon.foreco.category.entity.Trash;
+import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.infra.s3.dto.UploadDto;
 import com.sesacthon.infra.s3.exception.ImageUploadException;
 import java.io.BufferedReader;
@@ -18,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class S3Uploader {
 
   private final AmazonS3Client amazonS3Client;
+
+  private final TrashRepository trashRepository;
 
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
@@ -63,7 +68,7 @@ public class S3Uploader {
    * @param fileName createFileName 메서드를 통해서 변경된 파일 이름
    */
   private String getFileExtension(String fileName) {
-    List<String> possibleExtensions = Arrays.asList(".jpg",".png",".jpeg");
+    List<String> possibleExtensions = Arrays.asList(".jpg", ".png", ".jpeg");
     String extension = fileName.substring(fileName.lastIndexOf("."));
     if (!possibleExtensions.contains(extension)) {
       throw new ImageUploadException(IMAGE_WRONG_FILE_FORMAT);
@@ -73,8 +78,8 @@ public class S3Uploader {
 
 
   /**
-   * @param file MultipartFile
-   * @param fileName createFileName 메서드를 통해서 변경된 파일 이름
+   * @param file           MultipartFile
+   * @param fileName       createFileName 메서드를 통해서 변경된 파일 이름
    * @param objectMetadata MultipartFile의 length와 contentType을 가진 객체
    */
   private void uploadToS3(MultipartFile file, String fileName, ObjectMetadata objectMetadata) {
@@ -102,7 +107,7 @@ public class S3Uploader {
    * @param multipartFile 사용자가 촬영한 이미지 파일
    * @return 서버 전송 결과 메시지 + 분석 결과값 반환
    */
-  public UploadDto sendToAiServer(MultipartFile multipartFile) throws IOException{
+  public UploadDto sendToAiServer(MultipartFile multipartFile) throws IOException {
     final String endPoint = aiUrl;
 
     String fileUrl = uploadFile(multipartFile);
@@ -125,6 +130,8 @@ public class S3Uploader {
 
     // AI 서버로 요청 전송 및 응답 처리
     int responseCode = connection.getResponseCode();
+
+    Long trashId = -1L;
     if (responseCode == HttpURLConnection.HTTP_OK) {
       // 성공적으로 이미지 전달했을 경우
       BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -136,16 +143,36 @@ public class S3Uploader {
       }
       in.close();
 
-      return new UploadDto("AI 서버에 이미지 전송 성공", removeEscape(response.toString()));
+      String resultValue = removeEscape(response.toString());
+      //단일 품목이며, 조회가 가능한 품목인 경우 상세조회할 trash의 id를 반환함.
+      trashId = judgeItCanBeSearched(resultValue);
+      return new UploadDto("AI 서버에 이미지 전송 성공", resultValue, trashId);
     } else {
       // 전달 실패
-      return new UploadDto("AI 서버에 이미지 전송 실패", null);
+      return new UploadDto("AI 서버에 이미지 전송 실패", null, trashId);
+    }
+  }
+
+  private Long judgeItCanBeSearched(String resultValue) {
+    //단일 재질인지 판단
+    if (resultValue.contains("],[")) {
+      return -1L;
+    }
+
+    //단일 재질인 경우에도, 조회가 가능한 데이터인지 판단
+    int endIndex = resultValue.indexOf(",");
+    String keyword = resultValue.substring(2, endIndex);
+    Optional<Trash> trash = trashRepository.findByNameContainingAndParentTrashIsNotNull(keyword);   //keyword를 포함한 name이며, parentTrash가  null이 아닌 경우를 찾음.
+    if (trash.isPresent()) {
+      return trash.get().getId();
+    } else {
+      return -1L;
     }
   }
 
   private String removeEscape(String response) {
     return response.replace("\"", "")
-                   .replace("bboxes:", "")
+        .replace("bboxes:", "")
         .replace("{", "")
         .replace("}", "");
   }
