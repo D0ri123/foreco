@@ -62,6 +62,13 @@ public class Member extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   private OAuth2Provider oauth2Provider;
 
+  /**
+   * 지역
+   */
+  @ManyToOne
+  @JoinColumn(name="region_id")
+  private Region region;
+
   @PrePersist
   public void createId() {
     this.id = UuidCreator.getTimeOrdered();
@@ -77,15 +84,14 @@ public class Member extends BaseTimeEntity {
     this.oauth2Provider = oauth2Provider;
   }
 
-  public void updateInfo(String profileUrl, String username) {
+  public void updateInfo(String profileUrl, String username, Region region) {
     this.profileUrl = profileUrl;
     this.username = username;
+    this.region = region;
   }
 
-  /**
-   * 지역
-   */
-  @ManyToOne
-  @JoinColumn(name="region_id")
-  private Region region;
+  public void setRegion(Region region) {
+    this.region = region;
+  }
+
 }
