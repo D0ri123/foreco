@@ -63,7 +63,6 @@ oauth2:
     baseUrl: https://kauth.kakao.com
     clientId: dd6c51dc02204dacd84d70e52a877d8f
     #TODO: 실제 배포 도메인 주소로 바꿔야 함
-    redirectUri: https://foreco.store/api/v1/account/kakao/result
     secretKey: ${SECRET_KEY}
 
 ai:
