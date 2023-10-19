@@ -3,6 +3,8 @@ package com.sesacthon.foreco.mission.entity;
 import static jakarta.persistence.GenerationType.*;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
@@ -21,7 +23,7 @@ public class Mission {
   private Long id;
 
   /**
-   * 미션 주제 이름
+   * 미션 제목
    */
   private String title;
 
@@ -34,5 +36,37 @@ public class Mission {
    * 미션 요청 메서드
    */
   private String apiMethod;
+
+  /**
+   * 미션 포인트
+   */
+  private Long rewardPoint;
+
+  /**
+   * 미션 난이도
+   */
+  @Enumerated(EnumType.STRING)
+  private Difficulty difficulty;
+
+  /**
+   * 미션 참여 가능 횟수
+   */
+  private Long personalCount;
+
+  /**
+   * 미션 총 참여 가능 횟수
+   */
+  private Long totalCount;
+
+  /**
+   * 미션 종류
+   */
+  @Enumerated(EnumType.STRING)
+  private Kind kind;
+
+  /**
+   * 미션 설명
+   */
+  private String description;
 
 }

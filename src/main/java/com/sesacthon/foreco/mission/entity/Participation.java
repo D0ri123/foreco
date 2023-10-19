@@ -27,8 +27,6 @@ public class Participation {
 
   private LocalDate performDate;
 
-  private Long missionPoint;
-
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "member_id")
   private Member member;
