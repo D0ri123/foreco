@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public class QuizMissionChoice {
 
-  Integer id;
+  Long id;
   String name;
 
-  public QuizMissionChoice(Integer id, String name) {
+  public QuizMissionChoice(Long id, String name) {
     this.id = id;
     this.name = name;
   }

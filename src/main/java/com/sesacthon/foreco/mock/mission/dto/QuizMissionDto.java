@@ -6,12 +6,15 @@ import lombok.Getter;
 @Getter
 public class QuizMissionDto {
 
+  MissionInfo missionInfo;
   List<String> images;
   List<QuizMissionChoice> choices;
-  QuizMissionChoice answer;
+  QuizMissionAnswer answer;
 
-  public QuizMissionDto(List<String> images, List<QuizMissionChoice> choices,
-      QuizMissionChoice answer) {
+  public QuizMissionDto(MissionInfo missionInfo, List<String> images,
+      List<QuizMissionChoice> choices,
+      QuizMissionAnswer answer) {
+    this.missionInfo = missionInfo;
     this.images = images;
     this.choices = choices;
     this.answer = answer;
