@@ -67,4 +67,10 @@ public class S3Controller {
         DataResponse.of(HttpStatus.CREATED, "촬영 이미지 업로드 성공", uploadDto), HttpStatus.CREATED);
   }
 
+  @PostMapping(value = "/api/v1/image/prefix", consumes = {MediaType.ALL_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<DataResponse<String>> uploadImageWithPrefix(@RequestPart String prefix, @RequestPart(name = "image") MultipartFile multipartFile){
+    String url = s3Uploader.uploadFile(multipartFile, prefix);
+    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "이미지 업로드 성공", url),HttpStatus.CREATED);
+  }
+
 }

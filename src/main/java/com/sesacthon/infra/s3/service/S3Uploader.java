@@ -54,6 +54,20 @@ public class S3Uploader {
     return amazonS3Client.getUrl(bucket, fileName).toString();
   }
 
+  /**
+   *
+   * @param multipartFile 업로드할 이미지
+   * @param prefix 파일이 위치할 경로(폴더)
+   * @return 이미지 url
+   */
+  public String uploadFile(MultipartFile multipartFile, String prefix) {
+    //multipartFile 을 String 형식 fileName 으로 변환한다.
+    String fileName = prefix+"/"+createFileName(multipartFile.getOriginalFilename());
+    uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
+    return amazonS3Client.getUrl(bucket, fileName).toString();
+  }
+
+
 
   /**
    * @param fileName multipartFile의 파일 이름
@@ -90,6 +104,7 @@ public class S3Uploader {
       throw new ImageUploadException(HANDLE_ACCESS_DENIED);
     }
   }
+
 
 
   /**
