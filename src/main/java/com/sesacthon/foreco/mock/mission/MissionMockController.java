@@ -59,14 +59,7 @@ public class MissionMockController {
   }
 
 
-  @Operation(summary = "dashboard 조회 api", description = "사용자의 이름, 리워드 포인트, 프로필이미지url을 조회합니다.")
-  @GetMapping("mock/api/v1/mission/dashboard")
-  public ResponseEntity<DataResponse<DashboardDto>> getDashboard() {
-    //TODO 실제로직 구현시 context holder에서 값 가져온후, 조회
-    DashboardDto response = new DashboardDto("김포레코", 100L, "url");
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "dashboard 조회 성공", response),
-        HttpStatus.OK);
-  }
+
 
   @Operation(summary = "쓰레기 맞추기 미션 요청 api", description = "조각난 쓰레기 사진을 보고 어떤 쓰레기인지 맞추는 미션 api")
   @GetMapping("mock/api/v1/mission/{id}")
