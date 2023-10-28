@@ -90,8 +90,9 @@ public class Member extends BaseTimeEntity {
     this.region = region;
   }
 
-  public void setRegion(Region region) {
+  public void addForecoInfo(Region region) {
     this.region = region;
+    this.totalPoint = 0L;
   }
 
 }

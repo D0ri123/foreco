@@ -22,6 +22,14 @@ public class RegionService {
         .orElseThrow(() -> new RegionNotFoundException(REGION_NOT_FOUND));
   }
 
+  //region 정보가 없을 경우
+  public Region findRegion(Long regionId) {
+    return regionRepository.findById(regionId)
+        .orElseThrow(() -> new RegionNotFoundException(REGION_NOT_FOUND));
+  }
+
+
+
 
 
 

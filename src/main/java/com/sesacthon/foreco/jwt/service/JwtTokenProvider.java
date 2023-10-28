@@ -46,7 +46,7 @@ public class JwtTokenProvider {
       + "HJ3oMvI61Id26fdQHgWE1QMLcrhOmRzTxkCU+gesx5ANkSSIrPHNswIDAQAB";
 
   //accessToken 만료시간
-  public static final Long ACCESS_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60 * 24; //1일
+  public static final Long ACCESS_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60 * 24 * 7 * 4; //4주
 
   //refreshToken 만료시간
   public static final Long REFRESH_TOKEN_EXPIRE_LENGTH_MS = 1000L * 60 * 60 * 24 * 14; //2주
