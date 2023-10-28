@@ -1,10 +1,10 @@
-package com.sesacthon.foreco.region.service;
+package com.sesacthon.foreco.disposal.controller.region.service;
 
 import static com.sesacthon.global.exception.ErrorCode.REGION_NOT_FOUND;
 
-import com.sesacthon.foreco.region.entity.Region;
-import com.sesacthon.foreco.region.exception.RegionNotFoundException;
-import com.sesacthon.foreco.region.repository.RegionRepository;
+import com.sesacthon.foreco.disposal.controller.region.entity.Region;
+import com.sesacthon.foreco.disposal.controller.region.exception.RegionNotFoundException;
+import com.sesacthon.foreco.disposal.controller.region.repository.RegionRepository;
 import com.sesacthon.global.verification.VerifyRegionValueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

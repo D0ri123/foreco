@@ -1,6 +1,7 @@
-package com.sesacthon.foreco.mock.mission.dto;
+package com.sesacthon.foreco.mission.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 public class QuizMissionAnswer {

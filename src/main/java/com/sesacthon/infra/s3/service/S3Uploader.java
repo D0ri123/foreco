@@ -12,6 +12,7 @@ import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.infra.s3.dto.UploadDto;
 import com.sesacthon.infra.s3.exception.ImageUploadException;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -55,18 +56,42 @@ public class S3Uploader {
   }
 
   /**
-   *
    * @param multipartFile 업로드할 이미지
-   * @param prefix 파일이 위치할 경로(폴더)
+   * @param prefix        파일이 위치할 경로(폴더)
    * @return 이미지 url
    */
   public String uploadFile(MultipartFile multipartFile, String prefix) {
     //multipartFile 을 String 형식 fileName 으로 변환한다.
-    String fileName = prefix+"/"+createFileName(multipartFile.getOriginalFilename());
+    String fileName = prefix + "/" + createFileName(multipartFile.getOriginalFilename());
     uploadToS3(multipartFile, fileName, getObjectMetadata(multipartFile));
     return amazonS3Client.getUrl(bucket, fileName).toString();
   }
 
+  /**
+   *
+   * @param base64Data base64로 인코딩된 문자열
+   * @param prefix s3에 저장할 경로
+   * @return s3에 저장된 이미지 url
+   */
+  public String uploadFileUsingStream(String base64Data, String prefix) {
+
+    byte[] bI = org.apache.commons.codec.binary.Base64.decodeBase64(
+        (base64Data.substring(base64Data.indexOf(",") + 1)).getBytes());
+
+    InputStream inputStream = new ByteArrayInputStream(bI);
+    String fileName = prefix + "/" + UUID.randomUUID().toString();
+
+    ObjectMetadata objectMetadata = new ObjectMetadata();
+    objectMetadata.setContentLength(bI.length);
+    objectMetadata.setContentType("image/png");
+    try {
+      amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+          .withCannedAcl(CannedAccessControlList.PublicRead));
+    } catch (Exception e) {
+      throw new ImageUploadException(HANDLE_ACCESS_DENIED);
+    }
+    return amazonS3Client.getUrl(bucket, fileName).toString();
+  }
 
 
   /**
@@ -104,7 +129,6 @@ public class S3Uploader {
       throw new ImageUploadException(HANDLE_ACCESS_DENIED);
     }
   }
-
 
 
   /**
@@ -176,11 +200,12 @@ public class S3Uploader {
 
     //단일 재질인 경우에도, 조회가 가능한 데이터인지 판단
     int endIndex = resultValue.indexOf(",");
-    if(endIndex < 0){    //ai응답 값부터 확인해봐야함
+    if (endIndex < 0) {    //ai응답 값부터 확인해봐야함
       return -1L;
     }
     String keyword = resultValue.substring(2, endIndex);
-    Optional<Trash> trash = trashRepository.findByNameContainingAndParentTrashIsNotNull(keyword);   //keyword를 포함한 name이며, parentTrash가  null이 아닌 경우를 찾음.
+    Optional<Trash> trash = trashRepository.findByNameContainingAndParentTrashIsNotNull(
+        keyword);   //keyword를 포함한 name이며, parentTrash가  null이 아닌 경우를 찾음.
     if (trash.isPresent()) {
       return trash.get().getId();
     } else {

@@ -51,7 +51,11 @@ public enum ErrorCode {
   MOTIVATION_NOT_FOUND(HttpStatus.BAD_REQUEST, "M001", "현재 쓰레기 관련 동기부여 정보가 없습니다."),
 
   //배출정보(Disposal)
-  DISPOSAL_NOT_FOUND(HttpStatus.BAD_REQUEST,"D001", "현재 조회 가능한 배출 정보가 없습니다.");
+  DISPOSAL_NOT_FOUND(HttpStatus.BAD_REQUEST,"D001", "현재 조회 가능한 배출 정보가 없습니다."),
+
+  //Mission
+  MISSION_NOT_FOUND(HttpStatus.NOT_FOUND,"MS001","조회 가능한 미션 정보가 없습니다."),
+  EXCEEDS_MAXIMUM_PARTICIPATION(HttpStatus.FORBIDDEN,"MS002","해당 미션에 참여가능한 횟수를 초과했습니다.");
 
 
   private final HttpStatus status;
