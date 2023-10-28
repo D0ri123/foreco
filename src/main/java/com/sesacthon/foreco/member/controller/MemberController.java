@@ -5,7 +5,6 @@ import com.sesacthon.foreco.member.dto.response.LoginResponseDto;
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;
 import com.sesacthon.foreco.member.service.MemberInfoService;
 import com.sesacthon.foreco.member.service.MemberSignUpService;
-import com.sesacthon.foreco.mock.mission.dto.DashboardDto;
 import com.sesacthon.foreco.region.entity.Region;
 import com.sesacthon.foreco.region.service.RegionService;
 import com.sesacthon.global.response.DataResponse;
@@ -13,7 +12,6 @@ import com.sesacthon.infra.feign.dto.response.KakaoUserInfoResponseDto;
 import com.sesacthon.infra.feign.service.KakaoFeignService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +33,6 @@ public class MemberController {
   private final MemberSignUpService memberSignUpService;
   private final MemberInfoService memberInfoService;
   private final RegionService regionService;
-
 
   /**
    * 로그인 요청을 통해 인가코드를 redirect url로 발급 가능
