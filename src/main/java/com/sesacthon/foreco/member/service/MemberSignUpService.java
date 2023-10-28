@@ -60,7 +60,7 @@ public class MemberSignUpService {
   private Member signUp(KakaoUserInfoResponseDto kakaoUserInfo, Region region) {
     Member member = kakaoUserInfo.toEntity();
     //repository에 저장하기 이전에 region을 member의 region으로 넣고싶다.
-    member.setRegion(region);
+    member.addForecoInfo(region);
     return memberService.saveInfo(member);
   }
 
