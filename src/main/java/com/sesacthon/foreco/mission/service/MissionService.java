@@ -41,9 +41,8 @@ public class MissionService {
   private final TrashRepository trashRepository;
   private final MissionRepository missionRepository;
   private final ParticipationRepository participationRepository;
-
   @Value("${cloud.aws.s3.bucket}")
-  private final String bucket;
+  private String bucket;
   //TODO api요청한 멤버정보(memberId, regiondId)를 controller에서 넘겨주는 코드로 수정한후 아래 2개의 필드 삭제 필요.
   private static final Long REGION_ID = 1L; //지역 고정 -
   private static final UUID USER_ID = null;//임시 UUID...
