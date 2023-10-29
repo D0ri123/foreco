@@ -56,7 +56,6 @@ public class MissionService {
     //첫번째 값을 정답으로 취급함.
     QuizMissionImage answerInfo = quizMissionImages.get(0);
     //AI서버에 정답 이미지를 보내 4개의 이미지로 분할함
-    //TODO AI서버 주소 환경변수로 가릴 것!
     List<String> dividedImageUrls = divideImage(answerInfo);
 
     List<QuizMissionChoice> choices = new ArrayList<>();

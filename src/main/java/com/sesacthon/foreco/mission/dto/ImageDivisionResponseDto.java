@@ -1,14 +1,15 @@
 package com.sesacthon.foreco.mission.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @RequiredArgsConstructor
 public class ImageDivisionResponseDto {
 
-  private List<String> images;
+  @Schema(description = "분할된 이미지 url")
+  private final List<String> images;
 
 }
