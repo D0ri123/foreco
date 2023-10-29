@@ -1,4 +1,4 @@
-package com.sesacthon.foreco.disposal.controller.region.exception;
+package com.sesacthon.foreco.region.exception;
 
 import com.sesacthon.global.exception.BusinessException;
 import com.sesacthon.global.exception.ErrorCode;

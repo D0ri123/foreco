@@ -4,7 +4,7 @@ import static jakarta.persistence.FetchType.*;
 
 import com.sesacthon.foreco.category.entity.Trash;
 
-import com.sesacthon.foreco.disposal.controller.region.entity.Region;
+import com.sesacthon.foreco.region.entity.Region;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

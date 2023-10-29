@@ -1,4 +1,4 @@
-package com.sesacthon.foreco.disposal.controller.region.entity;
+package com.sesacthon.foreco.region.entity;
 
 import com.sesacthon.foreco.category.entity.RegionCategory;
 import com.sesacthon.foreco.member.entity.Member;

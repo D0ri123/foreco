@@ -1,7 +1,7 @@
 package com.sesacthon.foreco.member.controller;
 
-import com.sesacthon.foreco.disposal.controller.region.entity.Region;
-import com.sesacthon.foreco.disposal.controller.region.service.RegionService;
+import com.sesacthon.foreco.region.entity.Region;
+import com.sesacthon.foreco.region.service.RegionService;
 import com.sesacthon.foreco.jwt.dto.SessionUser;
 import com.sesacthon.foreco.member.dto.response.LoginResponseDto;
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;

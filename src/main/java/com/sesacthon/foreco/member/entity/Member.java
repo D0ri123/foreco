@@ -2,7 +2,7 @@ package com.sesacthon.foreco.member.entity;
 
 import com.github.f4b6a3.uuid.UuidCreator;
 import com.sesacthon.foreco.common.BaseTimeEntity;
-import com.sesacthon.foreco.disposal.controller.region.entity.Region;
+import com.sesacthon.foreco.region.entity.Region;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

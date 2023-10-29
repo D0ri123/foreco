@@ -2,7 +2,7 @@ package com.sesacthon.global.verification;
 
 import static com.sesacthon.global.exception.ErrorCode.NOT_VALID_REGION_TYPE;
 
-import com.sesacthon.foreco.disposal.controller.region.exception.NotValidRegionTypeException;
+import com.sesacthon.foreco.region.exception.NotValidRegionTypeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
