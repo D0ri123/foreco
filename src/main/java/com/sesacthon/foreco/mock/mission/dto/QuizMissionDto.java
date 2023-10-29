@@ -1,5 +1,6 @@
 package com.sesacthon.foreco.mock.mission.dto;
 
+import com.sesacthon.foreco.mission.dto.QuizMissionChoice;
 import java.util.List;
 import lombok.Getter;
 

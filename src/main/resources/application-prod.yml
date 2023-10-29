@@ -64,3 +64,4 @@ oauth2:
 
 ai:
   modelUrl: ${AI_URL}
+  missionUrl: ${AI_MISSION_URL}

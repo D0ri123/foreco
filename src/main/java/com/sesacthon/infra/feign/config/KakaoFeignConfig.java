@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableFeignClients(basePackages = "com.sesacthon.infra")
+@EnableFeignClients(basePackages = "com.sesacthon.infra.feign.client.kakao")
 public class KakaoFeignConfig {
 
   @Bean

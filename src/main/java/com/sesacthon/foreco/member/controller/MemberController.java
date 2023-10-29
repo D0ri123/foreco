@@ -1,12 +1,12 @@
 package com.sesacthon.foreco.member.controller;
 
+import com.sesacthon.foreco.region.entity.Region;
+import com.sesacthon.foreco.region.service.RegionService;
 import com.sesacthon.foreco.jwt.dto.SessionUser;
 import com.sesacthon.foreco.member.dto.response.LoginResponseDto;
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;
 import com.sesacthon.foreco.member.service.MemberInfoService;
 import com.sesacthon.foreco.member.service.MemberSignUpService;
-import com.sesacthon.foreco.region.entity.Region;
-import com.sesacthon.foreco.region.service.RegionService;
 import com.sesacthon.global.response.DataResponse;
 import com.sesacthon.infra.feign.dto.response.KakaoUserInfoResponseDto;
 import com.sesacthon.infra.feign.service.KakaoFeignService;

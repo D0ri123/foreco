@@ -1,4 +1,4 @@
-package com.sesacthon.infra.feign.client;
+package com.sesacthon.infra.feign.client.kakao;
 
 import com.sesacthon.infra.feign.config.KakaoFeignConfig;
 import com.sesacthon.infra.feign.dto.response.KakaoUserInfoResponseDto;

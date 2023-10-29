@@ -25,6 +25,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       EC2_HOST: ${EC2_HOST}
       AI_URL: ${AI_URL}
+      AI_MISSION_URL: ${AI_MISSION_URL}
     depends_on:
       - redis
     links:
@@ -46,6 +47,8 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       EC2_HOST: ${EC2_HOST}
       AI_URL: ${AI_URL}
+      AI_MISSION_URL: ${AI_MISSION_URL}
+
     depends_on:
       - redis
     links:
