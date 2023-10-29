@@ -1,4 +1,4 @@
-package com.sesacthon.foreco.mission.dto;
+package com.sesacthon.infra.feign.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 public class ImageDivisionResponseDto {
 
   @Schema(description = "분할된 이미지 url")
-  private final List<String> images;
+  List<String> images;
 
 }

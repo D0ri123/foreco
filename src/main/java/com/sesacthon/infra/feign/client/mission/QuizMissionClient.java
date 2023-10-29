@@ -1,7 +1,7 @@
 package com.sesacthon.infra.feign.client.mission;
 
-import com.sesacthon.foreco.mission.dto.ImageDivisionRequestDto;
-import com.sesacthon.foreco.mission.dto.ImageDivisionResponseDto;
+import com.sesacthon.infra.feign.dto.request.ImageDivisionRequestDto;
+import com.sesacthon.infra.feign.dto.response.ImageDivisionResponseDto;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

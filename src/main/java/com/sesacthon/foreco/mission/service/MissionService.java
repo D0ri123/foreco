@@ -3,7 +3,7 @@ package com.sesacthon.foreco.mission.service;
 import com.sesacthon.foreco.category.entity.Trash;
 import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.foreco.mission.QuizMissionImage;
-import com.sesacthon.foreco.mission.dto.ImageDivisionRequestDto;
+import com.sesacthon.infra.feign.dto.request.ImageDivisionRequestDto;
 import com.sesacthon.foreco.mission.dto.MissionInfo;
 import com.sesacthon.foreco.mission.dto.QuizMissionAnswer;
 import com.sesacthon.foreco.mission.dto.QuizMissionChoice;
@@ -95,7 +95,7 @@ public class MissionService {
   }
 
   /**
-   * @param mission   미션entity
+   * @param mission 미션entity
    * @return missionInfo(리워드, 제목, 소개, 유저가 이용한 횟수, 유저가 최대 참여 가능한 횟수)
    */
   private MissionInfo getMissionInfo(Mission mission) {
@@ -126,7 +126,8 @@ public class MissionService {
    */
   private List<String> divideImage(QuizMissionImage answerInfo) {
     List<String> dividedAnswerImages = quizMissionAiServer.divideImage(
-        new ImageDivisionRequestDto(bucket+answerInfo.getUrl(), answerInfo.getCoordinate())).getImages();
+        new ImageDivisionRequestDto("https://" + bucket + answerInfo.getUrl(),
+            answerInfo.getCoordinate())).getImages();
     //이미지를 decoding한 후, s3에 업로드함
     List<String> imageUrls = new ArrayList<>();
     for (String base64Data : dividedAnswerImages) {
