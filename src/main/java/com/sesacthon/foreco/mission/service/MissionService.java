@@ -49,7 +49,7 @@ public class MissionService {
     Mission mission = missionRepository.findById(missionId)
         .orElseThrow(() -> new MissionNotFountException(
             ErrorCode.MISSION_NOT_FOUND));
-    MissionInfo missionInfo = getMissionInfo(missionId, mission);
+    MissionInfo missionInfo = getMissionInfo(mission);
 
     //mission에 사용할 쓰레기들의 정보를 4개 가져옴
     List<QuizMissionImage> quizMissionImages = QuizMissionImage.getRandomQuizMissionImages();
@@ -96,8 +96,9 @@ public class MissionService {
    * @param mission   미션entity
    * @return missionInfo(리워드, 제목, 소개, 유저가 이용한 횟수, 유저가 최대 참여 가능한 횟수)
    */
-  private MissionInfo getMissionInfo(Long missionId, Mission mission) {
+  private MissionInfo getMissionInfo(Mission mission) {
     MissionInfo missionInfo;
+    Long missionId = mission.getId();
     Long rewardPoint = mission.getRewardPoint();
     String title = mission.getTitle();
     String description = mission.getDescription();
