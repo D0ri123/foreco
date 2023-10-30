@@ -17,9 +17,11 @@ import jakarta.persistence.PrePersist;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
@@ -40,14 +42,12 @@ public class Member extends BaseTimeEntity {
   private Long totalPoint;
 
   /**
-   * 회원번호 (oauthProvider#회원번호)
-   * 게스트 로그인한 사용자의 이름을 나타내기 위해서 생성했습니다.
+   * 회원번호 (oauthProvider#회원번호) 게스트 로그인한 사용자의 이름을 나타내기 위해서 생성했습니다.
    */
   private String userNumber;
 
   /**
-   * SNS 로그인한 사용자의 이름
-   * 게스트 로그인 사용자의 이름은 NONE으로 설정했습니다.
+   * SNS 로그인한 사용자의 이름 게스트 로그인 사용자의 이름은 NONE으로 설정했습니다.
    */
   private String username;
 
@@ -66,7 +66,7 @@ public class Member extends BaseTimeEntity {
    * 지역
    */
   @ManyToOne
-  @JoinColumn(name="region_id")
+  @JoinColumn(name = "region_id")
   private Region region;
 
   @PrePersist
