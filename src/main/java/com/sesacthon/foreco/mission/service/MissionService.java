@@ -2,7 +2,12 @@ package com.sesacthon.foreco.mission.service;
 
 import com.sesacthon.foreco.category.entity.Trash;
 import com.sesacthon.foreco.category.repository.TrashRepository;
+import com.sesacthon.foreco.member.repository.MemberRepository;
 import com.sesacthon.foreco.mission.QuizMissionImage;
+import com.sesacthon.foreco.mission.entity.Difficulty;
+import com.sesacthon.foreco.mission.entity.Kind;
+import com.sesacthon.foreco.mission.entity.Participation;
+import com.sesacthon.foreco.mock.mission.dto.MissionDetailDto;
 import com.sesacthon.infra.feign.dto.request.ImageDivisionRequestDto;
 import com.sesacthon.foreco.mission.dto.MissionInfo;
 import com.sesacthon.foreco.mission.dto.QuizMissionAnswer;
@@ -17,6 +22,7 @@ import com.sesacthon.foreco.trash.entity.TrashInfo;
 import com.sesacthon.foreco.trash.repository.TrashInfoRepository;
 import com.sesacthon.global.exception.ErrorCode;
 import com.sesacthon.infra.feign.client.mission.QuizMissionClient;
+import com.sesacthon.infra.s3.service.S3Downloader;
 import com.sesacthon.infra.s3.service.S3Uploader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +44,13 @@ public class MissionService {
 
   private final QuizMissionClient quizMissionAiServer;
   private final S3Uploader s3Uploader;
+  private final S3Downloader s3Downloader;
   private final TrashInfoRepository trashInfoRepository;
   private final TrashRepository trashRepository;
   private final MissionRepository missionRepository;
   private final ParticipationRepository participationRepository;
+  private final MemberRepository memberRepository;
+
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
   //TODO api요청한 멤버정보(memberId, regiondId)를 controller에서 넘겨주는 코드로 수정한후 아래 2개의 필드 삭제 필요.
@@ -154,5 +164,34 @@ public class MissionService {
     return " ";
   }
 
+  public List<MissionDetailDto> findMissionsWithKind(String kind, UUID memberId) {
+    List<Mission> missions = missionRepository.findByKind(Kind.valueOf(kind));
+    return createEntityToDto(missions, memberId);
+  }
+
+
+  public List<MissionDetailDto> findMissionsWithKindAndDifficulty(String kind, String difficulty, UUID memberId) {
+    List<Mission> missions =
+        missionRepository.findByKindAndDifficulth(Kind.valueOf(kind), Difficulty.valueOf(difficulty));
+    return createEntityToDto(missions, memberId);
+  }
+
+  private List<MissionDetailDto> createEntityToDto(List<Mission> missions, UUID memberId) {
+    return missions.stream()
+        .map(mission -> {
+          List<Participation> totalParticipation = participationRepository.findByMissionId(mission.getId());
+          long totalParticipationSize = totalParticipation.size();
+          long personalParticipationSize = getPersonalParticipationSize(memberId, totalParticipation);
+          String iconUrl = s3Downloader.getIconUrl(mission.getIcon().getIconFile());
+          return new MissionDetailDto(mission, personalParticipationSize, totalParticipationSize, iconUrl);
+        })
+        .collect(Collectors.toList());
+  }
+
+  private long getPersonalParticipationSize(UUID memberId, List<Participation> totalParticipation) {
+    return totalParticipation.stream()
+        .filter(participation -> participation.getMember().getId().equals(memberId))
+        .count();
+  }
 
 }

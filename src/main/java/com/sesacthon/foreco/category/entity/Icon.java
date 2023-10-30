@@ -46,7 +46,10 @@ public enum Icon {
   BANNER("banner.png"),
   DELIVERY_DISH("deliveryDish.png"),
   TENT("tent.png"),
-  EGG("egg.png");
+  EGG("egg.png"),
+
+  //미션
+  PUZZLE("egg.png");
 
   private final String iconFile;
 

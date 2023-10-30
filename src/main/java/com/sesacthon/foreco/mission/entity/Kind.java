@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Kind {
-  WIZ, ETC
+  WIZ("Wiz"),
+  ETC("Etc");
+
+  private final String name;
 
 }

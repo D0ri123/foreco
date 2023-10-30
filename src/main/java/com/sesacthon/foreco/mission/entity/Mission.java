@@ -2,6 +2,7 @@ package com.sesacthon.foreco.mission.entity;
 
 import static jakarta.persistence.GenerationType.*;
 
+import com.sesacthon.foreco.category.entity.Icon;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -68,5 +69,8 @@ public class Mission {
    * 미션 설명
    */
   private String description;
+
+  @Enumerated(EnumType.STRING)
+  private Icon icon;
 
 }
