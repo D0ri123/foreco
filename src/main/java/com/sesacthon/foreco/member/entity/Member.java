@@ -66,7 +66,7 @@ public class Member extends BaseTimeEntity {
    * 지역
    */
   @ManyToOne
-  @JoinColumn(name="region_id")
+  @JoinColumn(name = "region_id")
   private Region region;
 
   @PrePersist
@@ -93,6 +93,10 @@ public class Member extends BaseTimeEntity {
   public void addForecoInfo(Region region) {
     this.region = region;
     this.totalPoint = 0L;
+  }
+
+  public void updateTotalPoint(Long totalPoint){
+    this.totalPoint = totalPoint;
   }
 
 }

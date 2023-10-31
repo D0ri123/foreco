@@ -2,8 +2,8 @@ package com.sesacthon.foreco.mock.mission;
 
 import com.sesacthon.foreco.mission.dto.QuizMissionChoice;
 import com.sesacthon.foreco.mission.dto.MissionInfo;
-import com.sesacthon.foreco.mock.mission.dto.MissionResultDto;
-import com.sesacthon.foreco.mock.mission.dto.MissionResultInfoDto;
+import com.sesacthon.foreco.mission.dto.MissionResultDto;
+import com.sesacthon.foreco.mission.dto.MissionResultInfoDto;
 import com.sesacthon.foreco.mission.dto.QuizMissionAnswer;
 import com.sesacthon.foreco.mission.dto.QuizMissionDto;
 import com.sesacthon.global.response.DataResponse;

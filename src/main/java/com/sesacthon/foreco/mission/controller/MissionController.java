@@ -8,7 +8,10 @@ import com.sesacthon.foreco.mock.mission.dto.MissionDto;
 import com.sesacthon.global.response.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+import com.sesacthon.foreco.mission.dto.MissionResultDto;
+import com.sesacthon.foreco.mission.dto.MissionResultInfoDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,8 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name="미션 관련 기능", description = "미션 관련 api")
 @RestController
 @RequiredArgsConstructor
 public class MissionController {
@@ -34,13 +40,6 @@ public class MissionController {
         HttpStatus.OK);
   }
 
-  /**
-   * 미션 목록을 조회합니다.
-   *
-   * @param kind 미션 종류
-   * @param difficulty 미션 난이도
-   * @return MissionDto 미션 목록들을 담은 Dto
-   */
   @Operation(summary = "미션 목록 조회 api", description = "미션 목록을 조회하는 api 입니다.")
   @GetMapping("/api/v1/mission")
   public ResponseEntity<DataResponse<MissionDto>> getMissions(
@@ -51,14 +50,26 @@ public class MissionController {
     if (difficulty == null) {
       List<MissionDetailDto> missions = missionService.findMissionsWithKind(kind, MEMBER_ID);
       MissionDto getAllMission = new MissionDto(missions);
-      return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "미션 목록 조회 성공", getAllMission), HttpStatus.OK);
+      return new ResponseEntity<>(
+          DataResponse.of(HttpStatus.OK, "미션 목록 조회 성공", getAllMission), HttpStatus.OK);
     }
 
     List<MissionDetailDto> missionsWithKindAndDifficulty =
         missionService.findMissionsWithKindAndDifficulty(kind, difficulty, MEMBER_ID);
     MissionDto getAllMissionWithCond = new MissionDto(missionsWithKindAndDifficulty);
-    return new ResponseEntity<>(DataResponse.of(HttpStatus.OK, "미션 목록 조회 성공", getAllMissionWithCond), HttpStatus.OK);
+    return new ResponseEntity<>(
+        DataResponse.of(HttpStatus.OK, "미션 목록 조회 성공", getAllMissionWithCond), HttpStatus.OK);
   }
 
+  @Operation(summary = "요청 결과 반영 api", description = "미션 수행이후 결과를 반영하고, 변경된 포인트 이력을 보여줍니다.")
+  @PostMapping("api/v1/mission/result")
+  public ResponseEntity<DataResponse<MissionResultInfoDto>> updateMissionResult(
+      @RequestBody MissionResultDto missionResultDto) {
+    MissionResultInfoDto response = missionService.recordHistory(missionResultDto, MEMBER_ID);
 
+    return new ResponseEntity<>(
+        DataResponse.of(HttpStatus.OK, "결과 반영 성공", response), HttpStatus.OK);
+
+  }
 }
+

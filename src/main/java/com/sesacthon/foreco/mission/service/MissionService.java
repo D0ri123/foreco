@@ -8,6 +8,8 @@ import com.sesacthon.foreco.mission.entity.Difficulty;
 import com.sesacthon.foreco.mission.entity.Kind;
 import com.sesacthon.foreco.mission.entity.Participation;
 import com.sesacthon.foreco.mock.mission.dto.MissionDetailDto;
+import com.sesacthon.foreco.mission.dto.MissionResultInfoDto;
+import com.sesacthon.foreco.mission.dto.MissionResultDto;
 import com.sesacthon.infra.feign.dto.request.ImageDivisionRequestDto;
 import com.sesacthon.foreco.mission.dto.MissionInfo;
 import com.sesacthon.foreco.mission.dto.QuizMissionAnswer;
@@ -35,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -53,6 +56,7 @@ public class MissionService {
 
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
+
   //TODO api요청한 멤버정보(memberId, regiondId)를 controller에서 넘겨주는 코드로 수정한후 아래 2개의 필드 삭제 필요.
   private static final Long REGION_ID = 1L; //지역 고정 -
   private static final UUID USER_ID = null;//임시 UUID...
@@ -194,4 +198,31 @@ public class MissionService {
         .count();
   }
 
+  /**
+   * @param missionResultDto (미션ID, 성공/실패 여부)
+   * @return
+   */
+  @Transactional
+  public MissionResultInfoDto recordHistory(MissionResultDto missionResultDto, UUID memberId) {
+    Mission mission = missionRepository.findById(missionResultDto.getMissionId())
+        .orElseThrow(() -> new MissionNotFountException(
+            ErrorCode.MISSION_NOT_FOUND));
+    if (missionResultDto.getIsSuccess()) {
+      return new MissionResultInfoDto(2000L, 2000L);
+    } else {
+      return new MissionResultInfoDto(2000L, 0L);
+    }
+    //TODO ContextHolde에서 User의 UUID를 받아온 이후, 아래 주석은 활성화하고 상단의 코드는 제거 해야함
+//    Mission mission = missionRepository.findById(missionResultDto.getMissionId())
+//        .orElseThrow(() -> new MissionNotFountException(
+//            ErrorCode.MISSION_NOT_FOUND));
+//    Member member  = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+//    MissionResultInfoDto missionResult = new MissionResultInfoDto(mission.getRewardPoint(), member.getTotalPoint());
+//    //성공한 경우
+//    if(missionResultDto.getIsSuccess()){
+//      member.updateTotalPoint(member.getTotalPoint() + mission.getRewardPoint());
+//      missionResult = new MissionResultInfoDto(mission.getRewardPoint(), member.getTotalPoint());
+//    }
+//    return missionResult;
+  }
 }
