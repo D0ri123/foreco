@@ -175,7 +175,7 @@ public class MissionService {
     } else {
       return new MissionResultInfoDto(2000L, 0L);
     }
-//    //TODO ContextHolde에서 User의 UUID를 받아온 이후, 아래 주석은 활성화하고 상단의 코드는 제거 해야함
+    //TODO ContextHolde에서 User의 UUID를 받아온 이후, 아래 주석은 활성화하고 상단의 코드는 제거 해야함
 //    Mission mission = missionRepository.findById(missionResultDto.getMissionId())
 //        .orElseThrow(() -> new MissionNotFountException(
 //            ErrorCode.MISSION_NOT_FOUND));
@@ -183,8 +183,8 @@ public class MissionService {
 //    MissionResultInfoDto missionResult = new MissionResultInfoDto(mission.getRewardPoint(), member.getTotalPoint());
 //    //성공한 경우
 //    if(missionResultDto.getIsSuccess()){
-//      member.setTotalPoint(member.getTotalPoint() + mission.getRewardPoint());
-//      missionResult.setUserPoint(member.getTotalPoint());
+//      member.updateTotalPoint(member.getTotalPoint() + mission.getRewardPoint());
+//      missionResult = new MissionResultInfoDto(mission.getRewardPoint(), member.getTotalPoint());
 //    }
 //    return missionResult;
   }

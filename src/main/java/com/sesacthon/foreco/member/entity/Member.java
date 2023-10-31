@@ -17,11 +17,9 @@ import jakarta.persistence.PrePersist;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
@@ -93,6 +91,10 @@ public class Member extends BaseTimeEntity {
   public void addForecoInfo(Region region) {
     this.region = region;
     this.totalPoint = 0L;
+  }
+
+  public void updateTotalPoint(Long totalPoint){
+    this.totalPoint = totalPoint;
   }
 
 }
