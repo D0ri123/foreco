@@ -41,7 +41,7 @@ public class S3Uploader {
   @Value("${cloud.aws.s3.bucket}")
   private String bucket;
 
-  @Value("${ai.modelUrl}")
+  @Value("${AI_MISSION_URL}")
   private String aiUrl;
 
   /**
@@ -147,7 +147,7 @@ public class S3Uploader {
    * @return 서버 전송 결과 메시지 + 분석 결과값 반환
    */
   public UploadDto sendToAiServer(MultipartFile multipartFile) throws IOException {
-    final String endPoint = aiUrl;
+    final String endPoint = aiUrl + "/Wiz-upload";
 
     String fileUrl = uploadFile(multipartFile);
 
