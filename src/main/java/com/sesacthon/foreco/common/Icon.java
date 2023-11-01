@@ -1,4 +1,4 @@
-package com.sesacthon.foreco.category.entity;
+package com.sesacthon.foreco.common;
 
 public enum Icon {
 
@@ -49,7 +49,10 @@ public enum Icon {
   EGG("egg.png"),
 
   //미션
-  PUZZLE("egg.png");
+  PUZZLE("puzzle.png"),
+  ENVIRONMENT("environment.png"),
+  KEITI("keiti.png"),
+  ICOOP("icoop.jpeg");
 
   private final String iconFile;
 

@@ -3,6 +3,7 @@ package com.sesacthon.foreco.category.entity;
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.LAZY;
 
+import com.sesacthon.foreco.common.Icon;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
