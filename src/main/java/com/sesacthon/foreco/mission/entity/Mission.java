@@ -73,4 +73,6 @@ public class Mission {
   @Enumerated(EnumType.STRING)
   private Icon icon;
 
+  private String missionLinkUrl;
+
 }

@@ -42,6 +42,9 @@ public class MissionDetailDto {
   @Schema(description = "미션 아이콘 url")
   private final String iconUrl;
 
+  @Schema(description = "기업 미션 url")
+  private final String missionUrl;
+
   public MissionDetailDto(Mission mission, Long missionSize, Long personalSize, String iconUrl) {
     this.id = mission.getId();
     this.kind = mission.getKind();
@@ -54,6 +57,7 @@ public class MissionDetailDto {
     this.personalCount = mission.getPersonalCount();
     this.personalParticipatingCount = personalSize;
     this.iconUrl = iconUrl;
+    this.missionUrl = mission.getMissionLinkUrl();
   }
 
 }
