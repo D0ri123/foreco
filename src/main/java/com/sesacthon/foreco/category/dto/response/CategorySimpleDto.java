@@ -18,5 +18,4 @@ public class CategorySimpleDto {
     this.categoryId = id;
     this.categoryName = name;
   }
-
 }
