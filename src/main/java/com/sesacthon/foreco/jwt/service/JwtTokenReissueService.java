@@ -26,7 +26,7 @@ public class JwtTokenReissueService {
     UUID memberId = redisService.findMemberByToken(refreshToken);
     Member member = memberService.getMemberById(memberId);
 
-    String newAccessToken = jwtTokenProvider.createAccessToken(memberId, member.getRole());
+    String newAccessToken = jwtTokenProvider.createAccessToken(memberId, member.getOauth2Provider());
     String newRefreshToken = jwtTokenProvider.createRefreshToken(memberId);
 
     redisService.saveRefreshToken(memberId, newRefreshToken);

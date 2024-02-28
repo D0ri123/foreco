@@ -3,8 +3,6 @@ package com.sesacthon.infra.feign.service;
 import com.sesacthon.infra.feign.client.kakao.KakaoInfoClient;
 import com.sesacthon.infra.feign.client.kakao.KakaoTokenClient;
 import com.sesacthon.infra.feign.dto.KakaoInfo;
-import com.sesacthon.infra.feign.dto.request.KakaoTokenRequestDto;
-import com.sesacthon.infra.feign.dto.response.KakaoTokenResponseDto;
 import com.sesacthon.infra.feign.dto.response.KakaoUserInfoResponseDto;
 import com.sesacthon.infra.feign.dto.response.KakaoUserUnlinkResponseDto;
 import java.net.URI;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class KakaoFeignService {
 
-  private final KakaoTokenClient kakaoTokenClient;
   private final KakaoInfoClient kakaoInfoClient;
   private final KakaoInfo kakaoInfo;
 
@@ -40,38 +37,15 @@ public class KakaoFeignService {
   }
 
   /**
-   * 인가 코드를 가지고 토큰을 가져옵니다.
-   * @param code 카카오 서버에서 내려준 인가 코드
-   * @return 해당 사용자 정보 response dto
-   */
-//  public KakaoUserInfoResponseDto getKakaoInfoWithToken(String code, String redirectUri) {
-//    //1. 인가 코드를 가지고 토큰을 가져온다.
-//    String kakaoToken = getKakaoToken(code, redirectUri);
-//    //2. 해당 토큰으로 user 정보를 들고온다.
-//    return getKakaoInfo(kakaoToken);
-//  }
-
-  /**
    * 카카오 액세스 토큰으로 유저 정보를 요청합니다.
    */
   public KakaoUserInfoResponseDto getKakaoInfo(String kakaoToken) {
-    return kakaoInfoClient.getUserInfo(kakaoToken);
-  }
-
-  /**
-   * 인가 코드를 가지고 토큰을 가져옵니다.
-   * @param code 서버에서 내려주는 인가코드.
-   * @return accessToken
-   */
-  private String getKakaoToken(String code, String redirectUri) {
-    KakaoTokenResponseDto token = kakaoTokenClient.getToken(
-        KakaoTokenRequestDto.newInstance(kakaoInfo, code, redirectUri).toString());
-    return token.getAccessToken();
+    String token = "Bearer " + kakaoToken;
+    return kakaoInfoClient.getUserInfo(token);
   }
 
   public KakaoUserUnlinkResponseDto unlinkService(String kakaoToken) {
     return kakaoInfoClient.unlinkUser(kakaoToken);
   }
-
 
 }

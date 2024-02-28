@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class SessionUser implements Serializable {
 
   private UUID uuid;
-  private String authority;
+  private String oauthProvider;
 
   public SessionUser(Member member) {
     this.uuid = member.getId();
-    this.authority = member.getRole().getAuthority();
+    this.oauthProvider = member.getOauth2Provider().toString();
   }
 }

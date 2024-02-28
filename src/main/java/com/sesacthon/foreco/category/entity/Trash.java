@@ -62,4 +62,5 @@ public class Trash {
    */
   @OneToMany(mappedBy = "trash")
   List<RegionCategory> regionCategories= new ArrayList<>();
+
 }

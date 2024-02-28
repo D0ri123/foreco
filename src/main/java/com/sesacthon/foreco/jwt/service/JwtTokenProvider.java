@@ -2,7 +2,7 @@ package com.sesacthon.foreco.jwt.service;
 
 import com.sesacthon.foreco.jwt.dto.SessionUser;
 import com.sesacthon.foreco.member.entity.Member;
-import com.sesacthon.foreco.member.entity.Role;
+import com.sesacthon.foreco.member.entity.OAuth2Provider;
 import com.sesacthon.foreco.member.repository.MemberRepository;
 import com.sesacthon.infra.redis.RefreshToken;
 import com.sesacthon.infra.redis.RefreshTokenRepository;
@@ -32,7 +32,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 /**
- * 토큰 발급해주는 서비스(Jwt 도메인의 Service 라고 생각하는 것이 좋다)
+ * 토큰 발급해주는 서비스
  */
 @Slf4j
 @Component
@@ -75,7 +75,7 @@ public class JwtTokenProvider {
     Optional<Member> optionalMember = memberRepository.findById(changeUuid);
 
     if (optionalMember.isEmpty()) {
-      throw new JwtException("유효하지 않은 토큰");
+      throw new JwtException("유효하지 않은 토큰입니다.");
     }
     return new SessionUser(optionalMember.get());
   }
@@ -90,15 +90,15 @@ public class JwtTokenProvider {
    * 게스트로 진입할때, 해당 유저를 DB에 저장하고 난 후의 UUID로 accessToken을 생성한다.
    * 유효시간은 1시간으로 설정해놓았다.
    */
-  public String createAccessToken(UUID uuid, Role role) {
+  public String createAccessToken(UUID uuid, OAuth2Provider provider) {
     Date now = new Date();
     Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH_MS);
 
     return Jwts.builder()
         .signWith(key, SignatureAlgorithm.HS256)
         .setSubject(uuid.toString())
-        .claim("role", role.getAuthority())
-        .setIssuer("bbok")
+        .claim("provider", provider)
+        .setIssuer("foreco")
         .setIssuedAt(now)
         .setExpiration(validity)
         .compact();
@@ -115,7 +115,7 @@ public class JwtTokenProvider {
 
     String refreshToken = Jwts.builder()
         .signWith(key, SignatureAlgorithm.HS256)
-        .setIssuer("bbok")
+        .setIssuer("foreco")
         .setIssuedAt(now)
         .setExpiration(validity)
         .compact();

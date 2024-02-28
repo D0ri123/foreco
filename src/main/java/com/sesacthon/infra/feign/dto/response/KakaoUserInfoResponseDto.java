@@ -1,8 +1,9 @@
 package com.sesacthon.infra.feign.dto.response;
 
+import com.sesacthon.foreco.member.entity.HousingType;
 import com.sesacthon.foreco.member.entity.Member;
 import com.sesacthon.foreco.member.entity.OAuth2Provider;
-import com.sesacthon.foreco.member.entity.Role;
+import com.sesacthon.foreco.region.entity.Region;
 import lombok.Getter;
 
 /**
@@ -52,15 +53,15 @@ public class KakaoUserInfoResponseDto {
     return String.format("%s#%s", OAuth2Provider.KAKAO, this.getId());
   }
 
-  public Member toEntity() {
+  public Member toEntity(Region region, HousingType housingType) {
     return Member.builder()
         .username(this.getUsername())
         .userNumber(createUserNumber())
-        .role(Role.ROLE_SOCIAL)
         .oauth2Provider(OAuth2Provider.KAKAO)
         .profileUrl(this.getProfileImg())
+        .region(region)
+        .housingType(housingType)
+        .totalPoint(0L)
         .build();
   }
-
-
 }

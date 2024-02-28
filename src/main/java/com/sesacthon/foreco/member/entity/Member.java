@@ -29,30 +29,17 @@ public class Member extends BaseTimeEntity {
   private UUID id;
 
   /**
-   * SNS에서 관리하는 사용자 번호
-   */
-  private Long snsId;
-
-  /**
-   * 역할(Guest, Social)
-   */
-  @Enumerated(EnumType.STRING)
-  private Role role;
-
-  /**
    * 멤버가 가지고 있는 리워드 총 포인트
    */
   private Long totalPoint;
 
   /**
    * 회원번호 (oauthProvider#회원번호)
-   * 게스트 로그인한 사용자의 이름을 나타내기 위해서 생성했습니다.
    */
   private String userNumber;
 
   /**
    * SNS 로그인한 사용자의 이름
-   * 게스트 로그인 사용자의 이름은 NONE으로 설정했습니다.
    */
   private String username;
 
@@ -68,6 +55,12 @@ public class Member extends BaseTimeEntity {
   private OAuth2Provider oauth2Provider;
 
   /**
+   * 주거 형태
+   */
+  @Enumerated(EnumType.STRING)
+  private HousingType housingType;
+
+  /**
    * 지역
    */
   @ManyToOne
@@ -80,24 +73,20 @@ public class Member extends BaseTimeEntity {
   }
 
   @Builder
-  public Member(String profileUrl, String userNumber,
-      Role role, OAuth2Provider oauth2Provider, String username) {
+  public Member(String profileUrl, String userNumber, OAuth2Provider oauth2Provider,
+      String username, Region region, HousingType housingType, Long totalPoint) {
     this.userNumber = userNumber;
     this.username = username;
     this.profileUrl = profileUrl;
-    this.role = role;
     this.oauth2Provider = oauth2Provider;
+    this.region = region;
+    this.totalPoint = totalPoint;
+    this.housingType = housingType;
   }
 
-  public void updateInfo(String profileUrl, String username, Region region) {
+  public void updateInfo(String profileUrl, String username) {
     this.profileUrl = profileUrl;
     this.username = username;
-    this.region = region;
-  }
-
-  public void addForecoInfo(Region region) {
-    this.region = region;
-    this.totalPoint = 0L;
   }
 
   public void updateTotalPoint(Long totalPoint){

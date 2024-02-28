@@ -1,7 +1,5 @@
 package com.sesacthon.foreco.member.controller;
 
-import com.sesacthon.foreco.region.entity.Region;
-import com.sesacthon.foreco.region.service.RegionService;
 import com.sesacthon.foreco.member.dto.response.LoginResponseDto;
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;
 import com.sesacthon.foreco.member.service.MemberInfoService;
@@ -32,7 +30,6 @@ public class MemberController {
   private final KakaoFeignService kakaoFeignService;
   private final MemberSignUpService memberSignUpService;
   private final MemberInfoService memberInfoService;
-  private final RegionService regionService;
 
   /**
    * 로그인 요청을 통해 인가코드를 redirect url로 발급 가능
@@ -52,19 +49,10 @@ public class MemberController {
   @GetMapping("/api/v1/account/kakao/result")
   public ResponseEntity<DataResponse<LoginResponseDto>> kakaoLogin(
       @RequestParam("token") String token,
-      @RequestParam(value = "region", required = false) String region ) {
-    LoginResponseDto kakaoLoginResponse;
-    //코드를 통해 액세스 토큰 발급한 후, 유저 정보를 가져온다.
-    // kakaoUser에서 카카오 회원번호도 함께 저장해야 한다.
+      @RequestParam(value = "region") String region,
+      @RequestParam(value = "type") String residenceType) {
     KakaoUserInfoResponseDto kakaoUser = kakaoFeignService.getKakaoInfo(token);
-    //loginKakaoMember를 하면서 region도 함께 넘겨준다.
-    if(region == null) {
-      Region fixedRegion = regionService.findRegion(1L);
-      String requestRegion = fixedRegion.getCity() + " " + fixedRegion.getGu() + " " + fixedRegion.getDong();
-      kakaoLoginResponse = memberSignUpService.loginKakaoMember(kakaoUser, requestRegion);
-    } else {
-      kakaoLoginResponse = memberSignUpService.loginKakaoMember(kakaoUser, region);
-    }
+    LoginResponseDto kakaoLoginResponse = memberSignUpService.loginKakaoMember(kakaoUser, region, residenceType);
     return new ResponseEntity<>(
         DataResponse.of(
             HttpStatus.CREATED, "카카오 계정으로 회원가입 성공", kakaoLoginResponse), HttpStatus.CREATED);

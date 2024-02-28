@@ -11,7 +11,7 @@ services:
   green:
     container_name: green
     image: leeseolhui/ibajee-web
-    platform: linux/amd64
+    platform: linux/arm64
     expose:
       - 8080
     ports:
