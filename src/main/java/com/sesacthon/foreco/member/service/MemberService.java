@@ -31,12 +31,6 @@ public class MemberService {
         .orElseThrow(()->new MemberNotFoundException(MEMBER_NOT_FOUND));
   }
 
-  public UUID getMemberBySNSId(Long id) {
-    log.info("해당 SNS 회원번호를 가진 멤버를 찾습니다.");
-    return memberRepository.findBySnsId(id)
-        .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
-  }
-
   public void deleteMember(UUID memberId) {
     log.info("해당 아이디를 가진 멤버 데이터를 삭제합니다.");
     memberRepository.deleteById(memberId);

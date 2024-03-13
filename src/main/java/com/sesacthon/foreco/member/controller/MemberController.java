@@ -82,7 +82,7 @@ public class MemberController {
       @RequestParam("token") String token
   ) {
     KakaoUserUnlinkResponseDto response = kakaoFeignService.unlinkService(token);
-    memberInfoService.deleteMemberInfo(response.getId());
+    memberInfoService.deleteMemberInfo("KAKAO#", response.getId());
     return new ResponseEntity<>(
         MessageResponse.of(HttpStatus.OK, "서비스 탈퇴 성공"), HttpStatus.OK);
   }

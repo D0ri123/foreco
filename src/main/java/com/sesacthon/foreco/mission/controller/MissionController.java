@@ -31,7 +31,7 @@ public class MissionController {
   private static final UUID MEMBER_ID = UUID.fromString("667c59d0-0524-47fb-ab5a-effdaa62b598");
 
   @Operation(summary = "쓰레기 맞추기 미션 요청 api", description = "조각난 쓰레기 사진을 보고 어떤 쓰레기인지 맞추는 미션 api")
-  @GetMapping("api/v1/mission/{id}")
+  @GetMapping("/api/v1/mission/{id}")
   public ResponseEntity<DataResponse<QuizMissionDto>> getMission(
       @PathVariable(name = "id") Long id) {
 

@@ -1,7 +1,10 @@
 package com.sesacthon.foreco.member.service;
 
+import static com.sesacthon.global.exception.ErrorCode.*;
+
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;
 import com.sesacthon.foreco.member.entity.Member;
+import com.sesacthon.foreco.member.exception.MemberNotFoundException;
 import com.sesacthon.foreco.mission.service.ParticipationService;
 import com.sesacthon.infra.redis.RedisService;
 import java.util.UUID;
@@ -21,14 +24,16 @@ public class MemberInfoService {
     return new MemberInfoResponseDto(member);
   }
 
-  public void deleteMemberInfo(Long snsId) {
-    UUID memberId = memberService.getMemberBySNSId(snsId);
+  public void deleteMemberInfo(String oauthProvider, Long snsId) {
+    String memberNumber = oauthProvider + snsId.toString();
+    Member member = memberService.getMemberByUserNumber(memberNumber)
+        .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND));
 
     // 1. 사용자와 연관된 모든 데이터를 삭제한다.
-    participationService.deleteMemberLog(memberId);
-    memberService.deleteMember(memberId);
+    participationService.deleteMemberLog(member.getId());
+    memberService.deleteMember(member.getId());
 
     // 2. 사용자의 refreshToken 값을 삭제한다.
-    redisService.deleteRefreshToken(memberId);
+    redisService.deleteRefreshToken(member.getId());
   }
 }
