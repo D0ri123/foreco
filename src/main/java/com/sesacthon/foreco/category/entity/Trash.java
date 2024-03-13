@@ -3,6 +3,8 @@ package com.sesacthon.foreco.category.entity;
 import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.LAZY;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sesacthon.foreco.common.Icon;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 
 /**
@@ -50,12 +53,15 @@ public class Trash {
    * 상위 카테고리 Id.
    * 해당 데이터가 상위 카테고리라면 null
    */
+  @JsonBackReference
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "trash_id")
   private Trash parentTrash;
 
+  @JsonManagedReference
+  @BatchSize(size = 100)
   @OneToMany(mappedBy = "parentTrash")
-  private List<Trash> childTrashes;
+  private List<Trash> childTrashes = new ArrayList<>();
 
   /**
    * 지역 카테고리(RegionCategory)

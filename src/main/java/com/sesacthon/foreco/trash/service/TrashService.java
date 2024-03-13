@@ -6,6 +6,8 @@ import com.sesacthon.foreco.category.repository.RegionCategoryRepository;
 import com.sesacthon.foreco.category.repository.TrashRepository;
 import com.sesacthon.foreco.disposal.dto.response.DisposalInfoDto;
 import com.sesacthon.foreco.disposal.entity.Disposal;
+import com.sesacthon.foreco.search.dto.response.RandomTrashKeywordDto;
+import com.sesacthon.foreco.search.dto.response.RandomTrashesDto;
 import com.sesacthon.foreco.trash.dto.RelevantTrashDto;
 import com.sesacthon.foreco.trash.dto.RelevantTrashesDto;
 import com.sesacthon.foreco.trash.dto.SearchedTrashDto;
@@ -116,5 +118,17 @@ public class TrashService {
         .collect(Collectors.toList());
 
     return new SearchedTrashesDto(result);
+  }
+
+  public RandomTrashesDto getRandomTrashes() {
+    //1. 대분류 쓰레기가 아닌 쓰레기 리스트를 가져온다.
+    List<Trash> trashes = trashRepository.findTrashes();
+
+    // 쓰레기 리스트를 돌면서 dto로 변환한다.
+    List<RandomTrashKeywordDto> randomTrashes = trashes.stream()
+        .map(RandomTrashKeywordDto::new)
+        .collect(Collectors.toList());
+
+    return new RandomTrashesDto(randomTrashes);
   }
 }

@@ -56,5 +56,4 @@ public class TrashInfo {
   @OneToMany(mappedBy = "trashInfo")
   private List<Remark> remarks;
 
-
 }
