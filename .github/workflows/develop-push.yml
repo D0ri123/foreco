@@ -9,6 +9,8 @@ permissions:
   contents: read
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       # JDK 설정
       - uses: actions/checkout@v3
