@@ -1,5 +1,6 @@
 package com.sesacthon.foreco.member.controller;
 
+import com.sesacthon.foreco.jwt.dto.SessionUser;
 import com.sesacthon.foreco.member.dto.response.LoginResponseDto;
 import com.sesacthon.foreco.member.dto.response.MemberInfoResponseDto;
 import com.sesacthon.foreco.member.service.MemberInfoService;
@@ -11,12 +12,13 @@ import com.sesacthon.infra.feign.dto.response.KakaoUserUnlinkResponseDto;
 import com.sesacthon.infra.feign.service.KakaoFeignService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,12 +66,12 @@ public class MemberController {
   @Operation(
       summary = "미션탭에서 내 정보 조회",
       description = "사용자의 정보(프로필, 포인트, 이름 정보를 볼 수 있습니다.")
-  //TODO: UUID 고정 빼야 함
-//  @PreAuthorize("isAuthenticated()")
+  @PreAuthorize("isAuthenticated()")
   @GetMapping("/api/v1/mission/dashboard")
-  public ResponseEntity<DataResponse<MemberInfoResponseDto>> getMember() {
-    UUID memberId = UUID.fromString("667c59d0-0524-47fb-ab5a-effdaa62b598");
-    MemberInfoResponseDto memberInfo = memberInfoService.getMember(memberId);
+  public ResponseEntity<DataResponse<MemberInfoResponseDto>> getMember(
+      @AuthenticationPrincipal SessionUser sessionUser
+  ) {
+    MemberInfoResponseDto memberInfo = memberInfoService.getMember(sessionUser.getUuid());
     return new ResponseEntity<>(
         DataResponse.of(HttpStatus.OK, "멤버 정보 조회 성공", memberInfo), HttpStatus.OK);
   }
