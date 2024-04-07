@@ -13,7 +13,7 @@ public class RedisConfig {
   @Bean
   public LettuceConnectionFactory redisConnectionFactory() {
     //redis로 연결하기 위한 host, port설정
-    return new LettuceConnectionFactory("redis", 6379);
+    return new LettuceConnectionFactory("127.0.0.1", 6379);
   }
 
   @Bean
