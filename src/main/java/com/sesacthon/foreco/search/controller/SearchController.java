@@ -31,7 +31,7 @@ public class SearchController {
     }
 
     @Operation(summary = "검색어 자동완성 결과 반환")
-    @GetMapping("/api/v1/search/auto-complete")
+    @GetMapping("/api/v1/search/autocomplete")
     public ResponseEntity<DataResponse<AutoCompleteWordDto>> getAutoCompleteWords(@RequestParam("word") String word) {
         AutoCompleteWordDto autoCompleteWords = autoCompleteService.getAutoCompleteWords(word);
         return new ResponseEntity<>(
